@@ -12,13 +12,13 @@ public class TileMapGenerator : MonoBehaviour
     private int height;       // Height of the tile map.
 
     [Header("Tile and Objects")]
-    public GameObject tilePrefab; // Reference to your 1x1 cube prefab.
-    public GameObject seaweedPrefab; // Reference to your seaweed prefab.
-    public GameObject rockPrefab; // Reference to your rock prefab.
-    public GameObject coralPrefab; // Reference to your coral prefab.
-    public GameObject woodScrapsPrefab; // Reference to your wood scraps prefab.
-    public GameObject foodScrapsPrefab; // Reference to your food scraps prefab.
-    
+    public GameObject tilePrefab; 
+    public GameObject seaweedPrefab;
+    public GameObject rockPrefab; 
+    public GameObject coralPrefab; 
+    public GameObject woodScrapsPrefab;
+    public GameObject foodScrapsPrefab;
+
     [Header("Seaweed Spawn Settings")]
     public int seaweedPatchCount = 5;  // Number of seaweed patches.
     public int seaweedPerPatch = 25;  // Number of seaweed objects per patch;
@@ -30,12 +30,20 @@ public class TileMapGenerator : MonoBehaviour
     public int objectsPerPatch = 10;  // Number of objects per patch;
     public float objectSpawnRadius = 3.0f; // The radius within which other objects will be spawned.
 
+    [Header("Slope Settings")]
+    private const int gradualSlopeRows = 10;
+    private const float outerRowHeight = 5.0f;
+    private const float sandHeight = 1.0f;
+    private const float steepnessFactor = 2.0f; 
+
     void Start()
     {
         width = widthAndHeight;
         height = widthAndHeight;
         GenerateTileMap();
         SpawnObjects();
+
+        FindHighestTileYPosition();
     }
 
     void Update()
@@ -63,12 +71,6 @@ public class TileMapGenerator : MonoBehaviour
     {
         // Create empty GameObjects to serve as parents for organization.
         GameObject tileParent = new GameObject("Tiles");
-        GameObject seaweedParent = new GameObject("Seaweed");
-        GameObject rockParent = new GameObject("Rocks");
-
-        // Define the number of rows to have a gradual slope.
-        int gradualSlopeRows = 10;
-        float sandHeight = 1.0f; // Adjust this value for the sand height.
 
         for (int x = 0; x < width; x++)
         {
@@ -81,9 +83,6 @@ public class TileMapGenerator : MonoBehaviour
                 // Calculate the distance from the edge of the map.
                 float distanceToEdgeX = Mathf.Min(x, width - x);
                 float distanceToEdgeY = Mathf.Min(y, height - y);
-
-                // Calculate the outer rows heights.
-                float outerRowHeight = 5.0f;
 
                 // Modify the height based on the position.
                 if (distanceToEdgeX <= gradualSlopeRows || distanceToEdgeY <= gradualSlopeRows)
@@ -100,17 +99,44 @@ public class TileMapGenerator : MonoBehaviour
                 }
                 else
                 {
-                    // Default height for the rest of the map.
-                    float heightValue = Mathf.PerlinNoise(xCoord, yCoord);
-
-                    // Create a new tile and set it as a child of the "Tiles" parent.
-                    Vector3 position = new Vector3(x, heightValue, y);
-                    GameObject newTile = Instantiate(tilePrefab, position, Quaternion.identity);
-                    newTile.tag = "Tile"; // Set the tag for the tile object.
-                    newTile.transform.parent = tileParent.transform;
+                    // Check for specific conditions to create different slope configurations.
+                    if (x >= 20 && x <= 30) // Adjust these conditions for the desired configuration.
+                    {
+                        // Steeper slope configuration
+                        float heightValue = Mathf.PerlinNoise(xCoord, yCoord) * steepnessFactor;
+                        Vector3 position = new Vector3(x, heightValue, y);
+                        GameObject newTile = Instantiate(tilePrefab, position, Quaternion.identity);
+                        newTile.tag = "Tile"; // Set the tag for the tile object.
+                        newTile.transform.parent = tileParent.transform;
+                    }
+                    else
+                    {
+                        // Default slope configuration
+                        float heightValue = Mathf.PerlinNoise(xCoord, yCoord);
+                        Vector3 position = new Vector3(x, heightValue, y);
+                        GameObject newTile = Instantiate(tilePrefab, position, Quaternion.identity);
+                        newTile.tag = "Tile"; // Set the tag for the tile object.
+                        newTile.transform.parent = tileParent.transform;
+                    }
                 }
             }
         }
+    }
+
+    public float FindHighestTileYPosition()
+    {
+        float highestY = float.MinValue; // Initialize with a very low value.
+
+        GameObject[] tiles = GameObject.FindGameObjectsWithTag("Tile");
+        foreach (GameObject tile in tiles)
+        {
+            if (tile.transform.position.y > highestY)
+            {
+                highestY = tile.transform.position.y;
+            }
+        }
+
+        return highestY;
     }
 
     void SpawnObjects()

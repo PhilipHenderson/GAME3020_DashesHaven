@@ -4,25 +4,25 @@ using UnityEngine;
 
 public class Seaweed : MonoBehaviour
 {
-    private PlayerController playerController; // Reference to the player's controller.
+    private PlayerFishController playerFishController; // Reference to the player's controller.
     private float originalSpeed; // Store the original player speed.
 
     private void Start()
     {
-        playerController = FindObjectOfType<PlayerController>();
+        playerFishController = FindObjectOfType<PlayerFishController>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            if (playerController != null)
+            if (playerFishController != null)
             {
                 // Store the player's original speed.
-                originalSpeed = playerController.moveSpeed;
+                originalSpeed = playerFishController.moveSpeed;
 
                 // Slow down the player by half.
-                playerController.moveSpeed /= 2;
+                playerFishController.moveSpeed /= 2;
             }
         }
     }
@@ -31,10 +31,10 @@ public class Seaweed : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (playerController != null)
+            if (playerFishController != null)
             {
                 // Restore the player's original speed when leaving the seaweed collider.
-                playerController.moveSpeed = originalSpeed;
+                playerFishController.moveSpeed = originalSpeed;
             }
         }
     }
