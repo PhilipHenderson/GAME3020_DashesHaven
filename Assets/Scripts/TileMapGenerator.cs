@@ -66,6 +66,10 @@ public class TileMapGenerator : MonoBehaviour
         GameObject seaweedParent = new GameObject("Seaweed");
         GameObject rockParent = new GameObject("Rocks");
 
+        // Define the number of rows to have a gradual slope.
+        int gradualSlopeRows = 10;
+        float sandHeight = 1.0f; // Adjust this value for the sand height.
+
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
@@ -73,13 +77,38 @@ public class TileMapGenerator : MonoBehaviour
                 // Calculate a height value using Perlin noise.
                 float xCoord = (float)x / width * scale;
                 float yCoord = (float)y / height * scale;
-                float heightValue = Mathf.PerlinNoise(xCoord, yCoord);
 
-                // Create a new tile and set it as a child of the "Tiles" parent.
-                Vector3 position = new Vector3(x, heightValue, y);
-                GameObject newTile = Instantiate(tilePrefab, position, Quaternion.identity);
-                newTile.tag = "Tile"; // Set the tag for the tile object.
-                newTile.transform.parent = tileParent.transform;
+                // Calculate the distance from the edge of the map.
+                float distanceToEdgeX = Mathf.Min(x, width - x);
+                float distanceToEdgeY = Mathf.Min(y, height - y);
+
+                // Calculate the outer rows heights.
+                float outerRowHeight = 5.0f;
+
+                // Modify the height based on the position.
+                if (distanceToEdgeX <= gradualSlopeRows || distanceToEdgeY <= gradualSlopeRows)
+                {
+                    // Gradual slope (no gaps)
+                    float t = Mathf.Min(x, y, width - x, height - y) / (float)gradualSlopeRows;
+                    float heightValue = Mathf.Lerp(outerRowHeight, sandHeight, t);
+
+                    // Create a new tile and set it as a child of the "Tiles" parent.
+                    Vector3 position = new Vector3(x, heightValue, y);
+                    GameObject newTile = Instantiate(tilePrefab, position, Quaternion.identity);
+                    newTile.tag = "Tile"; // Set the tag for the tile object.
+                    newTile.transform.parent = tileParent.transform;
+                }
+                else
+                {
+                    // Default height for the rest of the map.
+                    float heightValue = Mathf.PerlinNoise(xCoord, yCoord);
+
+                    // Create a new tile and set it as a child of the "Tiles" parent.
+                    Vector3 position = new Vector3(x, heightValue, y);
+                    GameObject newTile = Instantiate(tilePrefab, position, Quaternion.identity);
+                    newTile.tag = "Tile"; // Set the tag for the tile object.
+                    newTile.transform.parent = tileParent.transform;
+                }
             }
         }
     }
