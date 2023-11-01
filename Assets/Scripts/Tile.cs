@@ -1,12 +1,16 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-    // Add any properties or methods relevant to your tiles here.
-
-    // This tag will help identify the tiles.
-    private void Start()
+    public void DestroyPickups()
     {
-        gameObject.tag = "Tile";
+        Pickup[] pickups = GetComponentsInChildren<Pickup>();
+        foreach (Pickup pickup in pickups)
+        {
+            if(pickup.isCollidingWithPlayer == true)
+                Destroy(pickup.gameObject);
+        }
     }
 }

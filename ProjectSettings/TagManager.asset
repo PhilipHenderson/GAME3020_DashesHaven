@@ -9,6 +9,7 @@ TagManager:
   - Stone
   - OtherObject
   - WaterSurface
+  - Pickup
   layers:
   - Default
   - TransparentFX

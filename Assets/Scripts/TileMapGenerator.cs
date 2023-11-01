@@ -29,6 +29,7 @@ public class TileMapGenerator : MonoBehaviour
     public int otherObjectPatchCount = 3;  // Number of patches for other objects.
     public int objectsPerPatch = 10;  // Number of objects per patch;
     public float objectSpawnRadius = 3.0f; // The radius within which other objects will be spawned.
+    public GameObject playerGameObject;
 
     [Header("Slope Settings")]
     private const int gradualSlopeRows = 10;
@@ -42,6 +43,18 @@ public class TileMapGenerator : MonoBehaviour
         height = widthAndHeight;
         GenerateTileMap();
         SpawnObjects();
+
+        // Get the player's Collider component.
+        Collider playerCollider = playerGameObject.GetComponent<Collider>();
+
+        // Find all PickupController components in the scene and set their playerCollider.
+        Pickup[] pickupControllers = FindObjectsOfType<Pickup>();
+        foreach (var pickupController in pickupControllers)
+        {
+            pickupController.playerCollider = playerCollider;
+        }
+
+        FindHighestTileYPosition();
 
         FindHighestTileYPosition();
     }
@@ -181,7 +194,7 @@ public class TileMapGenerator : MonoBehaviour
     void SpawnOtherObjects()
     {
         // Create an empty GameObject to serve as a parent for other objects organization.
-        GameObject otherObjectsParent = new GameObject("Other Objects");
+        GameObject otherObjectsParent = new GameObject("OtherObjects");
 
         for (int patch = 0; patch < otherObjectPatchCount; patch++)
         {
@@ -215,7 +228,7 @@ public class TileMapGenerator : MonoBehaviour
                     spawnedObject.transform.position = new Vector3(patchPosition.x, yOffset, patchPosition.z);
 
                     spawnedObject.transform.rotation = Quaternion.Euler(rotationAngle);
-                    spawnedObject.tag = "OtherObject"; // Set the tag for the other object.
+                    spawnedObject.tag = "Pickup"; // Set the tag for the other object.
                     spawnedObject.transform.parent = otherObjectsParent.transform;
                 }
             }

@@ -19,7 +19,7 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Confined;
-        Cursor.visible = false;
+        Cursor.visible = true;
 
         Vector3 initialPosition = new Vector3(transform.position.x, cameraYPosition, transform.position.z);
         transform.position = initialPosition;
