@@ -64,11 +64,11 @@ public class TileMapGenerator : MonoBehaviour
         // Check if the "R" key is pressed.
         if (Input.GetKeyDown(KeyCode.R))
         {
-            RegenerateTilesAndObjects();
+            RegenerateMap();
         }
     }
 
-    void RegenerateTilesAndObjects()
+    void RegenerateMap()
     {
         // Destroy existing tiles and objects.
         DestroyTiles();
@@ -281,20 +281,19 @@ public class TileMapGenerator : MonoBehaviour
     //        }
     //    }
     //}
+    // Function for all pickups
+    //GameObject GetRandomObjectPrefab()
+    //{
+    //    // Create an array of object prefabs you want to spawn (e.g., rocks, coral, wood scraps, food scraps).
+    //    GameObject[] objectPrefabs = { rockPrefab, coralPrefab, woodScrapsPrefab, foodScrapsPrefab };
+
+    //    // Randomly choose an object from the array.
+    //    return objectPrefabs[Random.Range(0, objectPrefabs.Length)];
+    //}
 
     float GetObjectYOffset(GameObject objectPrefab)
     {
         return 1.0f; // Adjust this value to match your specific object sizes.
-    }
-
-
-    GameObject GetRandomObjectPrefab()
-    {
-        // Create an array of object prefabs you want to spawn (e.g., rocks, coral, wood scraps, food scraps).
-        GameObject[] objectPrefabs = { rockPrefab, coralPrefab, woodScrapsPrefab, foodScrapsPrefab };
-
-        // Randomly choose an object from the array.
-        return objectPrefabs[Random.Range(0, objectPrefabs.Length)];
     }
 
     Vector3 GetSeaweedPositionOnPatch(Vector3 patchPosition)
@@ -320,7 +319,7 @@ public class TileMapGenerator : MonoBehaviour
     }
     void DestroyObjects()
     {
-        GameObject[] objects = GameObject.FindGameObjectsWithTag("OtherObject");
+        GameObject[] objects = GameObject.FindGameObjectsWithTag("Pickup");
         foreach (GameObject obj in objects)
         {
             Destroy(obj);
