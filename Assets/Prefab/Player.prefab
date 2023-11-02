@@ -121,9 +121,9 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0, g: 1, b: 0.071077585, a: 1}
-  m_Intensity: 1
-  m_Range: 10
-  m_SpotAngle: 59
+  m_Intensity: 5
+  m_Range: 100
+  m_SpotAngle: 27
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
@@ -264,7 +264,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2.34
+  m_Radius: 4.27
   m_Height: 7.44
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}

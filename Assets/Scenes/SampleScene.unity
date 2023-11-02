@@ -399,19 +399,19 @@ PrefabInstance:
     - target: {fileID: 8389591268680841169, guid: 8f678fcfed651ea4ea1bbb28e8ffc468, type: 3}
       propertyPath: rockPrefab
       value: 
-      objectReference: {fileID: 343184468038239644, guid: 55de76aa2d177e24fb8d61e3d94728e2, type: 3}
+      objectReference: {fileID: 3375808483104200454, guid: 55de76aa2d177e24fb8d61e3d94728e2, type: 3}
     - target: {fileID: 8389591268680841169, guid: 8f678fcfed651ea4ea1bbb28e8ffc468, type: 3}
       propertyPath: coralPrefab
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8394943889648516846, guid: d972898548cdce54eaacfed66121a4c9, type: 3}
     - target: {fileID: 8389591268680841169, guid: 8f678fcfed651ea4ea1bbb28e8ffc468, type: 3}
       propertyPath: widthAndHeight
-      value: 120
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 8389591268680841169, guid: 8f678fcfed651ea4ea1bbb28e8ffc468, type: 3}
       propertyPath: foodScrapsPrefab
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1759302968438542032, guid: 6b27bf5dcd2328347998f9a7223aa23e, type: 3}
     - target: {fileID: 8389591268680841169, guid: 8f678fcfed651ea4ea1bbb28e8ffc468, type: 3}
       propertyPath: playerGameObject
       value: 
@@ -419,10 +419,14 @@ PrefabInstance:
     - target: {fileID: 8389591268680841169, guid: 8f678fcfed651ea4ea1bbb28e8ffc468, type: 3}
       propertyPath: woodScrapsPrefab
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 4338056619903150428, guid: ea14c10e8ca29ee42a8c66f63d02e170, type: 3}
     - target: {fileID: 8389591268680841169, guid: 8f678fcfed651ea4ea1bbb28e8ffc468, type: 3}
       propertyPath: waterSurfacePrefab
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8389591268680841169, guid: 8f678fcfed651ea4ea1bbb28e8ffc468, type: 3}
+      propertyPath: otherObjectPatchCount
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
