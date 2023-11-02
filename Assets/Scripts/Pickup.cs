@@ -2,6 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PickupType
+{
+    Food,
+    Rock,
+    Coral,
+    ScrapWood
+};
+
 public class Pickup : MonoBehaviour
 {
     public bool isCollidingWithPlayer;

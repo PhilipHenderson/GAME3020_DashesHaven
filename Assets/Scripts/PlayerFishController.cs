@@ -13,6 +13,10 @@ public class PlayerFishController : MonoBehaviour
 
     public List<Pickup> pickups;
 
+    private Coroutine currentMoveCoroutine; // Store the current movement coroutine.
+
+    private Vector3 currentDestination;
+
     private void Start()
     {
         // Find all Pickup components in the scene and put them in the list
@@ -34,19 +38,19 @@ public class PlayerFishController : MonoBehaviour
                     if (tile != null)
                     {
                         targetTile = tile;
-                        Vector3 targetPosition = tile.transform.position;
-                        StartCoroutine(MoveToTile(targetPosition));
+                        currentDestination = targetTile.transform.position;
+                        StartCoroutine(MoveToTile(currentDestination));
                     }
                 }
-                if (hit.collider.CompareTag("Pickup"))
+                else if (hit.collider.CompareTag("Pickup"))
                 {
                     Pickup pickup = hit.collider.GetComponent<Pickup>();
                     if (pickup != null)
                     {
                         targetPickup = pickup;
                         targetTile = pickup.GetTile();
-                        Vector3 targetPosition = targetTile.transform.position;
-                        StartCoroutine(MoveToTileAndDestroyPickup(targetPosition));
+                        currentDestination = targetTile.transform.position;
+                        StartCoroutine(MoveToTileAndDestroyPickup(currentDestination));
                     }
                 }
             }
@@ -61,6 +65,9 @@ public class PlayerFishController : MonoBehaviour
 
         while (Vector3.Distance(transform.position, destination) > 1.0f)
         {
+            // Update the current destination
+            destination = new Vector3(currentDestination.x, aboveTileHeight, currentDestination.z);
+
             // Move towards the destination
             transform.position = Vector3.MoveTowards(transform.position, destination, moveSpeed * Time.deltaTime);
 
@@ -96,6 +103,16 @@ public class PlayerFishController : MonoBehaviour
         if (targetTile != null)
         {
             targetTile.DestroyPickups();
+        }
+    }
+
+    // Function to stop the current movement coroutine.
+    void StopCurrentMovement()
+    {
+        if (currentMoveCoroutine != null)
+        {
+            StopCoroutine(currentMoveCoroutine);
+            isMoving = false;
         }
     }
 }

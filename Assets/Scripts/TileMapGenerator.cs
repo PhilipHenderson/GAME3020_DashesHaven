@@ -154,8 +154,54 @@ public class TileMapGenerator : MonoBehaviour
 
     void SpawnObjects()
     {
+        SpawnPickupPatch(PickupType.Food, foodScrapsPrefab);
+        SpawnPickupPatch(PickupType.Rock, rockPrefab);
+        SpawnPickupPatch(PickupType.Coral, coralPrefab);
+        SpawnPickupPatch(PickupType.ScrapWood, woodScrapsPrefab);
         SpawnSeaweed();
-        SpawnOtherObjects();
+        //SpawnOtherObjects();
+    }
+
+    void SpawnPickupPatch(PickupType type, GameObject prefab)
+    {
+        // Create an empty GameObject to serve as a parent for the patch organization.
+        string patchName = type.ToString() + "Patch";
+        GameObject patchParent = new GameObject(patchName);
+
+        for (int patch = 0; patch < otherObjectPatchCount; patch++)
+        {
+            Vector2 randomPatchCenter;
+
+            // Generate a patch center within the specified radius.
+            do
+            {
+                randomPatchCenter = new Vector2(Random.Range(edgeBuffer, width - edgeBuffer), Random.Range(edgeBuffer, height - edgeBuffer));
+            } while (!IsCenterValid(randomPatchCenter, edgeBuffer));
+
+            for (int i = 0; i < objectsPerPatch; i++)
+            {
+                // Calculate a random position within the specified radius.
+                Vector2 offset = Random.insideUnitCircle * objectSpawnRadius;
+
+                // Random rotation on all axes (X, Y, and Z).
+                Vector3 rotationAngle = new Vector3(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+
+                Vector3 patchPosition = new Vector3(randomPatchCenter.x + offset.x, 0.0f, randomPatchCenter.y + offset.y);
+
+                if (prefab != null)
+                {
+                    GameObject spawnedObject = Instantiate(prefab, patchPosition, Quaternion.identity);
+
+                    // Adjust the Y-position to ensure objects are above the tiles.
+                    float yOffset = GetObjectYOffset(spawnedObject);
+                    spawnedObject.transform.position = new Vector3(patchPosition.x, yOffset, patchPosition.z);
+
+                    spawnedObject.transform.rotation = Quaternion.Euler(rotationAngle);
+                    spawnedObject.tag = "Pickup"; // Set the tag for the other object.
+                    spawnedObject.transform.parent = patchParent.transform;
+                }
+            }
+        }
     }
 
     void SpawnSeaweed()
@@ -191,55 +237,53 @@ public class TileMapGenerator : MonoBehaviour
         }
     }
 
-    void SpawnOtherObjects()
-    {
-        // Create an empty GameObject to serve as a parent for other objects organization.
-        GameObject otherObjectsParent = new GameObject("OtherObjects");
+    // This method spawns all pickups together
+    //void SpawnOtherObjects()
+    //{
+    //    // Create an empty GameObject to serve as a parent for other objects organization.
+    //    GameObject otherObjectsParent = new GameObject("OtherObjects");
 
-        for (int patch = 0; patch < otherObjectPatchCount; patch++)
-        {
-            Vector2 randomPatchCenter;
+    //    for (int patch = 0; patch < otherObjectPatchCount; patch++)
+    //    {
+    //        Vector2 randomPatchCenter;
 
-            // Generate a patch center within the specified radius.
-            do
-            {
-                randomPatchCenter = new Vector2(Random.Range(edgeBuffer, width - edgeBuffer), Random.Range(edgeBuffer, height - edgeBuffer));
-            } while (!IsCenterValid(randomPatchCenter, edgeBuffer));
+    //        // Generate a patch center within the specified radius.
+    //        do
+    //        {
+    //            randomPatchCenter = new Vector2(Random.Range(edgeBuffer, width - edgeBuffer), Random.Range(edgeBuffer, height - edgeBuffer));
+    //        } while (!IsCenterValid(randomPatchCenter, edgeBuffer));
 
-            for (int i = 0; i < objectsPerPatch; i++)
-            {
-                // Calculate a random position within the specified radius.
-                Vector2 offset = Random.insideUnitCircle * objectSpawnRadius;
+    //        for (int i = 0; i < objectsPerPatch; i++)
+    //        {
+    //            // Calculate a random position within the specified radius.
+    //            Vector2 offset = Random.insideUnitCircle * objectSpawnRadius;
 
-                // Random rotation on all axes (X, Y, and Z).
-                Vector3 rotationAngle = new Vector3(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+    //            // Random rotation on all axes (X, Y, and Z).
+    //            Vector3 rotationAngle = new Vector3(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
 
-                Vector3 patchPosition = new Vector3(randomPatchCenter.x + offset.x, 0.0f, randomPatchCenter.y + offset.y);
+    //            Vector3 patchPosition = new Vector3(randomPatchCenter.x + offset.x, 0.0f, randomPatchCenter.y + offset.y);
 
-                // Randomly choose an object to spawn.
-                GameObject objectPrefab = GetRandomObjectPrefab();
+    //            // Randomly choose an object to spawn.
+    //            GameObject objectPrefab = GetRandomObjectPrefab();
 
-                if (objectPrefab != null)
-                {
-                    GameObject spawnedObject = Instantiate(objectPrefab, patchPosition, Quaternion.identity);
+    //            if (objectPrefab != null)
+    //            {
+    //                GameObject spawnedObject = Instantiate(objectPrefab, patchPosition, Quaternion.identity);
 
-                    // Adjust the Y-position to ensure objects are above the tiles.
-                    float yOffset = GetObjectYOffset(spawnedObject);
-                    spawnedObject.transform.position = new Vector3(patchPosition.x, yOffset, patchPosition.z);
+    //                // Adjust the Y-position to ensure objects are above the tiles.
+    //                float yOffset = GetObjectYOffset(spawnedObject);
+    //                spawnedObject.transform.position = new Vector3(patchPosition.x, yOffset, patchPosition.z);
 
-                    spawnedObject.transform.rotation = Quaternion.Euler(rotationAngle);
-                    spawnedObject.tag = "Pickup"; // Set the tag for the other object.
-                    spawnedObject.transform.parent = otherObjectsParent.transform;
-                }
-            }
-        }
-    }
+    //                spawnedObject.transform.rotation = Quaternion.Euler(rotationAngle);
+    //                spawnedObject.tag = "Pickup"; // Set the tag for the other object.
+    //                spawnedObject.transform.parent = otherObjectsParent.transform;
+    //            }
+    //        }
+    //    }
+    //}
 
     float GetObjectYOffset(GameObject objectPrefab)
     {
-        // Calculate the Y-offset for the object based on its size or specific requirements.
-        // You may need to adjust this based on the scale and size of your object prefabs.
-        // For example, if the objects should be on top of tiles, you can set yOffset to the height of your tiles.
         return 1.0f; // Adjust this value to match your specific object sizes.
     }
 
