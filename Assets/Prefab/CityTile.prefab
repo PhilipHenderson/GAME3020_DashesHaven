@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 8176562850894588741}
   - component: {fileID: 9106681152736886150}
   - component: {fileID: 1237306980004497113}
+  - component: {fileID: 4513880363700875197}
   m_Layer: 0
   m_Name: CityTile
-  m_TagString: CityTile
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -116,5 +117,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d701eed7c3e09924ab95251711557304, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isOccupied: 0
+--- !u!114 &4513880363700875197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5875240678046362786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cc75cd3e4ec9b547acf7f73827ecd6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

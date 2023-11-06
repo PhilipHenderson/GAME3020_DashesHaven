@@ -121,16 +121,6 @@ public class CityMapGenerator : MonoBehaviour
         }
     }
 
-    CityTile GetCityTileAtPosition(Vector3 position)
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(position + Vector3.up * 10, Vector3.down, out hit, 20.0f))
-        {
-            return hit.collider.GetComponent<CityTile>();
-        }
-        return null;
-    }
-
     void SpawnLampposts()
     {
         GameObject lamppostParent = new GameObject("Lampposts");

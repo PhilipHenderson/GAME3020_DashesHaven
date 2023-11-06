@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerFishController : MonoBehaviour
 {
@@ -17,10 +18,49 @@ public class PlayerFishController : MonoBehaviour
 
     private Vector3 currentDestination;
 
+    public Vector3 citySpawnPosition; // Public variable for city spawn position.
+    public Vector3 seabedSpawnPosition;
+
+    private static PlayerFishController instance;
+
+    public static PlayerFishController Instance
+    {
+        get {if (instance == null)
+            {
+                // Try to find an existing instance in the scene
+                instance = FindObjectOfType<PlayerFishController>();
+
+                // If no instance was found, create a new one
+                if (instance == null)
+                {
+                    GameObject playerFishControllerObject = new GameObject("PlayerFishController");
+                    instance = playerFishControllerObject.AddComponent<PlayerFishController>();
+                }
+            }
+            return instance;
+        }
+    }
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+            Debug.Log("PlayerFishController instance created and marked as DontDestroyOnLoad.");
+        }
+        else
+        {
+            Debug.Log("Destroying duplicate PlayerFishController instance.");
+            Destroy(gameObject);
+        }
+    }
+
     private void Start()
     {
         // Find all Pickup components in the scene and put them in the list
         pickups = new List<Pickup>(FindObjectsOfType<Pickup>());
+        DontDestroyOnLoad(gameObject);
     }
 
     void Update()
@@ -32,7 +72,7 @@ public class PlayerFishController : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.collider.CompareTag("Tile"))
+                if (hit.collider.CompareTag("Tile") || hit.collider.CompareTag("CityTile"))
                 {
                     Tile tile = hit.collider.GetComponent<Tile>();
                     if (tile != null)
@@ -56,6 +96,7 @@ public class PlayerFishController : MonoBehaviour
             }
         }
     }
+
 
     IEnumerator MoveToTile(Vector3 targetPosition)
     {
@@ -114,5 +155,11 @@ public class PlayerFishController : MonoBehaviour
             StopCoroutine(currentMoveCoroutine);
             isMoving = false;
         }
+    }
+
+    public void StopMovementOnPortalCollision()
+    {
+        // Stop the fish's movement and reset its state.
+        StopCurrentMovement();
     }
 }

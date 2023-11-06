@@ -40,10 +40,18 @@ public class TileMapGenerator : MonoBehaviour
     [Header("Portal Settings")]
     public GameObject portal;
 
+    [Header("Spawn Settings")]
+    public Transform playerSpawnPoint; // Assign the spawn point from the Inspector.
+
+
     void Start()
     {
         width = widthAndHeight;
         height = widthAndHeight;
+
+        // Find the player GameObject using FindObjectOfType
+        playerGameObject = FindObjectOfType<PlayerFishController>().gameObject;
+
         GenerateTileMap();
         SpawnObjects();
         SpawnPortal();
@@ -58,10 +66,16 @@ public class TileMapGenerator : MonoBehaviour
             pickupController.playerCollider = playerCollider;
         }
 
-        FindHighestTileYPosition();
+        // Set the player's position to the spawn point.
+        if (playerSpawnPoint != null)
+        {
+            PlayerFishController player = FindObjectOfType<PlayerFishController>();
+            player.transform.position = new Vector3(playerSpawnPoint.position.x + 2, 2.0f, playerSpawnPoint.position.z + 2.0f);
+        }
 
         FindHighestTileYPosition();
     }
+
 
     void Update()
     {
@@ -340,7 +354,7 @@ public class TileMapGenerator : MonoBehaviour
 
     void SpawnPortal()
     {
-        Instantiate(portal, new Vector3(15.0f,1.5f,15.0f), Quaternion.identity);
+        Instantiate(portal, new Vector3(30.0f,1.5f,15.0f), Quaternion.identity);
     }
 
 }

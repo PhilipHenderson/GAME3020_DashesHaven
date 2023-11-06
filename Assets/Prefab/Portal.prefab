@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2889996878239883378}
-  - component: {fileID: 8531771145844497939}
   - component: {fileID: 1635426553210219293}
+  - component: {fileID: 8531771145844497939}
   - component: {fileID: 494547262500359963}
   m_Layer: 0
   m_Name: Portal
@@ -35,20 +35,6 @@ Transform:
   - {fileID: 1495176693763049660}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8531771145844497939
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8406639787716768129}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c51e48557a690aa40bec6fb61758f822, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  city: City
-  seabed: SeaBed
 --- !u!136 &1635426553210219293
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -72,6 +58,20 @@ CapsuleCollider:
   m_Height: 1.7816519
   m_Direction: 1
   m_Center: {x: -0.009133339, y: 0.18194598, z: 0}
+--- !u!114 &8531771145844497939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8406639787716768129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c51e48557a690aa40bec6fb61758f822, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  city: City
+  seabed: SeaBed
 --- !u!114 &494547262500359963
 MonoBehaviour:
   m_ObjectHideFlags: 0
