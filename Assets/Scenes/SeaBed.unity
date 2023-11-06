@@ -393,6 +393,10 @@ PrefabInstance:
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 8389591268680841169, guid: 8f678fcfed651ea4ea1bbb28e8ffc468, type: 3}
+      propertyPath: portal
+      value: 
+      objectReference: {fileID: 8406639787716768129, guid: 7f04cc68026b1e444a836723acf7070b, type: 3}
+    - target: {fileID: 8389591268680841169, guid: 8f678fcfed651ea4ea1bbb28e8ffc468, type: 3}
       propertyPath: edgeBuffer
       value: 30
       objectReference: {fileID: 0}

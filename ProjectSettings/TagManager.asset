@@ -10,6 +10,7 @@ TagManager:
   - OtherObject
   - WaterSurface
   - Pickup
+  - Building
   layers:
   - Default
   - TransparentFX

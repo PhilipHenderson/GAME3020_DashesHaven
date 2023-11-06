@@ -35,7 +35,10 @@ public class TileMapGenerator : MonoBehaviour
     private const int gradualSlopeRows = 10;
     private const float outerRowHeight = 5.0f;
     private const float sandHeight = 1.0f;
-    private const float steepnessFactor = 2.0f; 
+    private const float steepnessFactor = 2.0f;
+
+    [Header("Portal Settings")]
+    public GameObject portal;
 
     void Start()
     {
@@ -43,6 +46,7 @@ public class TileMapGenerator : MonoBehaviour
         height = widthAndHeight;
         GenerateTileMap();
         SpawnObjects();
+        SpawnPortal();
 
         // Get the player's Collider component.
         Collider playerCollider = playerGameObject.GetComponent<Collider>();
@@ -334,5 +338,9 @@ public class TileMapGenerator : MonoBehaviour
         }
     }
 
+    void SpawnPortal()
+    {
+        Instantiate(portal, new Vector3(15.0f,1.5f,15.0f), Quaternion.identity);
+    }
 
 }
