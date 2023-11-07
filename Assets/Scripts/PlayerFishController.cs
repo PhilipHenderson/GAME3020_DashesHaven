@@ -9,15 +9,16 @@ public class PlayerFishController : MonoBehaviour
     public float aboveTileHeight = 0.8f;
 
     private bool isMoving = false;
-    private Tile targetTile;
-    private Pickup targetPickup;
 
+    private Pickup targetPickup;
     public List<Pickup> pickups;
 
+    [Header("Tile Movement Settings")]
     private Coroutine currentMoveCoroutine; // Store the current movement coroutine.
-
     private Vector3 currentDestination;
+    private Tile targetTile;
 
+    [Header("Spawn Position Settings")]
     public Vector3 citySpawnPosition; // Public variable for city spawn position.
     public Vector3 seabedSpawnPosition;
 
@@ -65,21 +66,26 @@ public class PlayerFishController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(1) && !isMoving)
+        if (Input.GetMouseButtonDown(1))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.collider.CompareTag("Tile") || hit.collider.CompareTag("CityTile"))
+                if (hit.collider.CompareTag("Tile") || hit.collider.CompareTag("CityTile") || hit.collider.CompareTag("Portal"))
                 {
                     Tile tile = hit.collider.GetComponent<Tile>();
                     if (tile != null)
                     {
-                        targetTile = tile;
-                        currentDestination = targetTile.transform.position;
-                        StartCoroutine(MoveToTile(currentDestination));
+                        // Update the destination immediately
+                        currentDestination = tile.transform.position;
+
+                        // If the fish is not moving, start moving to the new destination
+                        if (!isMoving)
+                        {
+                            StartCoroutine(MoveToTile(currentDestination));
+                        }
                     }
                 }
                 else if (hit.collider.CompareTag("Pickup"))
@@ -90,13 +96,16 @@ public class PlayerFishController : MonoBehaviour
                         targetPickup = pickup;
                         targetTile = pickup.GetTile();
                         currentDestination = targetTile.transform.position;
-                        StartCoroutine(MoveToTileAndDestroyPickup(currentDestination));
+
+                        if (!isMoving)
+                        {
+                            StartCoroutine(MoveToTileAndDestroyPickup(currentDestination));
+                        }
                     }
                 }
             }
         }
     }
-
 
     IEnumerator MoveToTile(Vector3 targetPosition)
     {
@@ -119,6 +128,7 @@ public class PlayerFishController : MonoBehaviour
         }
 
         isMoving = false;
+        currentMoveCoroutine = null;
     }
 
     IEnumerator MoveToTileAndDestroyPickup(Vector3 targetPosition)
@@ -139,6 +149,7 @@ public class PlayerFishController : MonoBehaviour
         }
 
         isMoving = false;
+        currentMoveCoroutine = null;
 
         // Check for any pickups on the target tile and destroy them
         if (targetTile != null)
@@ -153,9 +164,11 @@ public class PlayerFishController : MonoBehaviour
         if (currentMoveCoroutine != null)
         {
             StopCoroutine(currentMoveCoroutine);
-            isMoving = false;
         }
+        isMoving = false;
+        currentMoveCoroutine = null;
     }
+
 
     public void StopMovementOnPortalCollision()
     {

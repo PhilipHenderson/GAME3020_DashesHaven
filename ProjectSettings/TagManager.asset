@@ -11,6 +11,8 @@ TagManager:
   - WaterSurface
   - Pickup
   - Building
+  - Portal
+  - CityTile
   layers:
   - Default
   - TransparentFX

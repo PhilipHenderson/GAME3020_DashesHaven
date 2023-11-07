@@ -157,7 +157,7 @@ public class CityMapGenerator : MonoBehaviour
 
     public void SpawnPortal()
     {
-        Instantiate(portal, new Vector3(5.0f, 1.0f, 5.0f), Quaternion.identity);
+        Instantiate(portal, new Vector3(10.0f, 1.0f, 10.0f), Quaternion.identity);
     }
 
     void SpawnCityWalls()

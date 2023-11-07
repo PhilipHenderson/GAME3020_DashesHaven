@@ -13,7 +13,7 @@ public class Portal : MonoBehaviour
             // Stop the player fish's movement.
             PlayerFishController player = FindObjectOfType<PlayerFishController>();
             player.StopMovementOnPortalCollision();
-
+            
             // Check the current scene name.
             string currentScene = SceneManager.GetActiveScene().name;
 

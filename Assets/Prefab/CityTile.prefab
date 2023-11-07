@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 8176562850894588741}
   - component: {fileID: 9106681152736886150}
   - component: {fileID: 1237306980004497113}
-  - component: {fileID: 4513880363700875197}
+  - component: {fileID: -838905845500581607}
   m_Layer: 0
   m_Name: CityTile
-  m_TagString: Tile
+  m_TagString: CityTile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOccupied: 0
---- !u!114 &4513880363700875197
+--- !u!114 &-838905845500581607
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
