@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -22,8 +24,20 @@ public class PlayerFishController : MonoBehaviour
     public Vector3 citySpawnPosition; // Public variable for city spawn position.
     public Vector3 seabedSpawnPosition;
 
-    private static PlayerFishController instance;
+    [Header("Player Settings")]
+    public int hp = 100;
+    public int energy = 100;
+    public int food = 0;
+    public int rocks = 0;
+    public int wood = 0;
+    public float maxPickupRange = 3.0f; // Adjust the range as needed.
+    public float sellRange = 2.0f;
 
+    SellAreaController sellArea;
+
+    public TopScreenUIController topScreenUIController;
+
+    private static PlayerFishController instance;
     public static PlayerFishController Instance
     {
         get {if (instance == null)
@@ -61,7 +75,13 @@ public class PlayerFishController : MonoBehaviour
     {
         // Find all Pickup components in the scene and put them in the list
         pickups = new List<Pickup>(FindObjectsOfType<Pickup>());
+        sellArea = FindAnyObjectByType<SellAreaController>();
         DontDestroyOnLoad(gameObject);
+        topScreenUIController.UpdateHPUI(100);
+        topScreenUIController.UpdateEnergyUI(100);
+        topScreenUIController.UpdateFoodUI(100);
+        topScreenUIController.UpdateRocksUI(0);
+        topScreenUIController.UpdateWoodUI(0);
     }
 
     void Update()
@@ -78,10 +98,7 @@ public class PlayerFishController : MonoBehaviour
                     Tile tile = hit.collider.GetComponent<Tile>();
                     if (tile != null)
                     {
-                        // Update the destination immediately
                         currentDestination = tile.transform.position;
-
-                        // If the fish is not moving, start moving to the new destination
                         if (!isMoving)
                         {
                             StartCoroutine(MoveToTile(currentDestination));
@@ -93,17 +110,29 @@ public class PlayerFishController : MonoBehaviour
                     Pickup pickup = hit.collider.GetComponent<Pickup>();
                     if (pickup != null)
                     {
-                        targetPickup = pickup;
-                        targetTile = pickup.GetTile();
-                        currentDestination = targetTile.transform.position;
-
-                        if (!isMoving)
+                        float distanceToPickup = Vector3.Distance(transform.position, pickup.transform.position);
+                        if (distanceToPickup <= maxPickupRange)
                         {
-                            StartCoroutine(MoveToTileAndDestroyPickup(currentDestination));
+                            // Call the CollectPickup method to handle pickup collection
+                            CollectPickup(pickup);
                         }
                     }
                 }
+                else if (hit.collider.CompareTag("SellFish"))
+                {
+                    float distanceToSellArea = Vector3.Distance(transform.position, hit.collider.transform.position);
+
+                    OpenSellWindow();
+                }
             }
+        }
+    }
+
+    void OpenSellWindow()
+    {
+        if (sellArea.playerInRange == true)
+        {
+            sellArea.popUpWindow.SetActive(true);
         }
     }
 
@@ -131,33 +160,6 @@ public class PlayerFishController : MonoBehaviour
         currentMoveCoroutine = null;
     }
 
-    IEnumerator MoveToTileAndDestroyPickup(Vector3 targetPosition)
-    {
-        isMoving = true;
-
-        Vector3 destination = new Vector3(targetPosition.x, aboveTileHeight, targetPosition.z);
-
-        while (Vector3.Distance(transform.position, destination) > 1.0f)
-        {
-            // Move towards the destination
-            transform.position = Vector3.MoveTowards(transform.position, destination, moveSpeed * Time.deltaTime);
-
-            // Make the fish look at the destination
-            transform.LookAt(destination);
-
-            yield return null;
-        }
-
-        isMoving = false;
-        currentMoveCoroutine = null;
-
-        // Check for any pickups on the target tile and destroy them
-        if (targetTile != null)
-        {
-            targetTile.DestroyPickups();
-        }
-    }
-
     // Function to stop the current movement coroutine.
     void StopCurrentMovement()
     {
@@ -169,10 +171,33 @@ public class PlayerFishController : MonoBehaviour
         currentMoveCoroutine = null;
     }
 
-
     public void StopMovementOnPortalCollision()
     {
         // Stop the fish's movement and reset its state.
         StopCurrentMovement();
+    }
+
+    void CollectPickup(Pickup pickup)
+    {
+        if (pickup.pickupType == PickupType.Food)
+        {
+            food++;
+            Destroy(pickup.gameObject);
+        }
+        else if (pickup.pickupType == PickupType.Rock)
+        {
+            rocks++;
+            Destroy(pickup.gameObject);
+        }
+        else if (pickup.pickupType == PickupType.Wood)
+        {
+            wood++;
+            Destroy(pickup.gameObject);
+        }
+
+        // Update the UI based on the collected pickup type and amount
+        topScreenUIController.UpdateFoodUI(food);
+        topScreenUIController.UpdateRocksUI(rocks);
+        topScreenUIController.UpdateWoodUI(wood);
     }
 }

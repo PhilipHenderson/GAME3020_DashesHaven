@@ -7,13 +7,15 @@ public enum PickupType
     Food,
     Rock,
     Coral,
-    ScrapWood
+    Wood
 };
 
 public class Pickup : MonoBehaviour
 {
     public bool isCollidingWithPlayer;
     public Collider playerCollider;
+
+    public PickupType pickupType;
 
     // Reference to the tile this pickup is on
     private Tile tile;

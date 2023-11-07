@@ -8,7 +8,7 @@ public class CityMapGenerator : MonoBehaviour
 {
     [Header("Tile Settings")]
     public int widthAndHeight;
-    public float scale = 1.0f;
+    public float scale = 2.0f;
     public bool IsOccupied { get; private set; }
 
     private int width;
@@ -21,6 +21,7 @@ public class CityMapGenerator : MonoBehaviour
     public GameObject lamppostPrefab;
 
     [Header("Building Spawn Settings")]
+    public GameObject mainCityBuildingPrefab;
     public int buildingCount = 50; // Number of buildings in the city.
     public float buildingSpawnRadius = 10.0f;
     public float buildingRadius = 2.0f; // Adjust this value based on the size of your buildings.
@@ -47,6 +48,11 @@ public class CityMapGenerator : MonoBehaviour
     public float wallHeight = 5.0f;
     public float wallOffset = 5.0f;
 
+    [Header("AI Settings")]
+    public GameObject sellFish;
+
+
+
     void Start()
     {
         width = widthAndHeight;
@@ -55,7 +61,8 @@ public class CityMapGenerator : MonoBehaviour
         SpawnCityObjects();
         SpawnCityWalls();
         spawnPos.x = portal.transform.position.x + 10.0f;
-        Instantiate(player, new Vector3(10, 5, 10), Quaternion.identity);
+        Instantiate(player, new Vector3(10, 3, 25), Quaternion.identity);
+        Instantiate(sellFish, new Vector3(5, 3, 15), Quaternion.identity);
     }
 
     void GenerateCityTileMap()
@@ -92,7 +99,16 @@ public class CityMapGenerator : MonoBehaviour
         SpawnBuildings();
         SpawnLampposts();
         SpawnPortal();
+        SpawnMainCityBuilding();
         // Add more city objects as needed.
+    }
+
+    void SpawnMainCityBuilding()
+    {
+        Vector3 centerPosition = new Vector3(width / 2, 0.0f, height / 2);
+        GameObject mainCityBuilding = Instantiate(mainCityBuildingPrefab, centerPosition, Quaternion.identity);
+        // Adjust the Y-position to ensure the main city building is above the city tiles.
+        mainCityBuilding.transform.position = new Vector3(centerPosition.x, centerPosition.y + buildingOffsetY, centerPosition.z);
     }
 
     void SpawnBuildings()
@@ -125,22 +141,31 @@ public class CityMapGenerator : MonoBehaviour
     {
         GameObject lamppostParent = new GameObject("Lampposts");
 
-        for (int i = 0; i < lamppostCount; i++)
+        // Define the number of rows in from the perimeter to place lampposts.
+        int rowsIn = 10; // Adjust this value as needed.
+
+        // Define the spacing between lampposts (about 20 tiles).
+        int spacing = 20; // Adjust this value as needed.
+
+        for (int x = 0; x < width; x++)
         {
-            Vector2 randomLamppostPosition;
-
-            do
+            for (int y = 0; y < height; y++)
             {
-                randomLamppostPosition = new Vector2(Random.Range(edgeBuffer, width - edgeBuffer), Random.Range(edgeBuffer, height - edgeBuffer));
-            } while (!IsCenterValid(randomLamppostPosition, edgeBuffer));
+                // Check if the current tile is in the outer rows and meets the spacing condition.
+                if ((x < rowsIn || x >= width - rowsIn || y < rowsIn || y >= height - rowsIn) &&
+                    (x % spacing == 0 && y % spacing == 0))
+                {
+                    // Calculate the position of the current tile.
+                    float positionX = x; // Adjust this if your tiles have different sizes.
+                    float positionY = 0.0f;
+                    float positionZ = y;
 
-            Vector2 offset = Random.insideUnitCircle * lamppostSpawnRadius;
-            Vector3 position = new Vector3(randomLamppostPosition.x + offset.x, 0.0f, randomLamppostPosition.y + offset.y);
-
-            GameObject lamppost = Instantiate(lamppostPrefab, position, Quaternion.identity);
-            // Adjust the Y-position to ensure lampposts are above the city tiles.
-            lamppost.transform.position = new Vector3(position.x, position.y + lamppostOffsetY, position.z);
-            lamppost.transform.parent = lamppostParent.transform;
+                    // Create a lamppost at the calculated position.
+                    Vector3 position = new Vector3(positionX, positionY + lamppostOffsetY, positionZ);
+                    GameObject lamppost = Instantiate(lamppostPrefab, position, Quaternion.identity);
+                    lamppost.transform.parent = lamppostParent.transform;
+                }
+            }
         }
     }
 
@@ -162,10 +187,10 @@ public class CityMapGenerator : MonoBehaviour
 
     void SpawnCityWalls()
     {
-        InstantiateWall(new Vector3(100.0f, wallOffset, 50.0f), Quaternion.identity);
-        InstantiateWall(new Vector3(0.0f, wallOffset, 50.0f), Quaternion.Euler(0, 0, 0));
-        InstantiateWall(new Vector3(50.0f, wallOffset, 100.0f), Quaternion.Euler(0, 90, 0));
-        InstantiateWall(new Vector3(50.0f, wallOffset, 0.0f), Quaternion.Euler(0, 90, 0));
+        InstantiateWall(new Vector3(50.0f, wallOffset, 25.0f), Quaternion.identity);
+        InstantiateWall(new Vector3(0.0f, wallOffset, 25.0f), Quaternion.Euler(0, 0, 0));
+        InstantiateWall(new Vector3(25.0f, wallOffset, 50.0f), Quaternion.Euler(0, 90, 0));
+        InstantiateWall(new Vector3(25.0f, wallOffset, 0.0f), Quaternion.Euler(0, 90, 0));
     }
 
     void InstantiateWall(Vector3 position, Quaternion rotation)

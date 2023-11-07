@@ -82,6 +82,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isCollidingWithPlayer: 0
   playerCollider: {fileID: 0}
+  pickupType: 3
 --- !u!1001 &9004044491350594853
 PrefabInstance:
   m_ObjectHideFlags: 0

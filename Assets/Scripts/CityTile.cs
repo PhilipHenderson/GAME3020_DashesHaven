@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public class CityTile : MonoBehaviour
+
+public class CityTile : Tile
 {
     public bool isOccupied;
 }

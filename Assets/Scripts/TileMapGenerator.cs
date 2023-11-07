@@ -175,7 +175,7 @@ public class TileMapGenerator : MonoBehaviour
         SpawnPickupPatch(PickupType.Food, foodScrapsPrefab);
         SpawnPickupPatch(PickupType.Rock, rockPrefab);
         SpawnPickupPatch(PickupType.Coral, coralPrefab);
-        SpawnPickupPatch(PickupType.ScrapWood, woodScrapsPrefab);
+        SpawnPickupPatch(PickupType.Wood, woodScrapsPrefab);
         SpawnSeaweed();
         //SpawnOtherObjects();
     }

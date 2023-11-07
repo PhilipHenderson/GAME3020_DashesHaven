@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7779116738499732201}
+  - component: {fileID: 221014924455104090}
   - component: {fileID: 3211244901045110154}
   - component: {fileID: 8207647716285205987}
-  - component: {fileID: 221014924455104090}
   m_Layer: 0
   m_Name: Stone1
   m_TagString: Untagged
@@ -35,6 +35,27 @@ Transform:
   - {fileID: 3526418490416761134}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &221014924455104090
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3375808483104200454}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3211244901045110154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,27 +82,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isCollidingWithPlayer: 0
   playerCollider: {fileID: 0}
---- !u!135 &221014924455104090
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3375808483104200454}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1.2
-  m_Center: {x: 0, y: 0, z: 0}
+  pickupType: 1
 --- !u!1001 &3997757842228801221
 PrefabInstance:
   m_ObjectHideFlags: 0
