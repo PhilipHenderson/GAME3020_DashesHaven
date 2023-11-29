@@ -1,40 +1,94 @@
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MiniMap : MonoBehaviour
 {
-    public Image miniMapImage; // Reference to your Image UI element.
-    public Camera miniMapCamera; // Reference to your mini-map Camera.
-    public LayerMask miniMapLayerMask; // Layers to render in the mini-map.
+    public Transform player;
+    public Transform cityMiniMapPosition;
+    public Transform seabedMiniMapPosition;
 
-    private RenderTexture renderTexture;
+    public bool rotateWithPlayer = false;
+    public float smoothSpeed = 5.0f;
 
-    void Start()
+    public Vector3 offsetFromPlayer;
+
+    private static MiniMap instance;
+
+    public static MiniMap Instance
     {
-        // Create a Render Texture with the desired resolution
-        renderTexture = new RenderTexture(256, 256, 24); // Adjust the size as needed
-        miniMapCamera.targetTexture = renderTexture; // Set the Render Texture as the target for the mini-map camera
-        miniMapCamera.cullingMask = miniMapLayerMask; // Set the layers to be rendered in the mini-map camera
-    }
-
-    void Update()
-    {
-        if (miniMapImage != null)
+        get
         {
-            // Set the Render Texture as the texture of the Image
-            miniMapImage.sprite = Sprite.Create(TextureFromRenderTexture(renderTexture),
-                                                new Rect(0, 0, renderTexture.width, renderTexture.height),
-                                                Vector2.one * 0.5f);
+            if (instance == null)
+            {
+                // Try to find an existing instance in the scene
+                instance = FindObjectOfType<MiniMap>();
+
+                // If no instance was found, create a new one
+                if (instance == null)
+                {
+                    GameObject MiniMapObject = new GameObject("MiniMap");
+                    instance = MiniMapObject.AddComponent<MiniMap>();
+                }
+            }
+            return instance;
         }
     }
 
-    Texture2D TextureFromRenderTexture(RenderTexture rt)
+    private void Awake()
     {
-        Texture2D tex = new Texture2D(rt.width, rt.height, TextureFormat.RGB24, false);
-        RenderTexture.active = rt;
-        tex.ReadPixels(new Rect(0, 0, rt.width, rt.height), 0, 0);
-        tex.Apply();
-        RenderTexture.active = null;
-        return tex;
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+            Debug.Log("MiniMap instance created and marked as DontDestroyOnLoad.");
+        }
+        else
+        {
+            Debug.Log("Destroying duplicate MiniMap instance.");
+            Destroy(gameObject);
+        }
+    }
+
+    private void Start()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        if (currentScene.name == "City")
+        {
+            // Set the minimap position to the city's position
+            transform.position = cityMiniMapPosition.position;
+            transform.parent = null; // Remove the parent relationship
+        }
+    }
+
+    private void Update()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+
+        if (currentScene.name == "SeaBed")
+        {
+            transform.position = seabedMiniMapPosition.position;
+
+            // Detach the minimap from the player's rotation
+            if (!rotateWithPlayer)
+            {
+                // Set the minimap's rotation to its initial rotation
+                Quaternion fixedRotation = Quaternion.identity;
+                transform.rotation = fixedRotation;
+            }
+
+            // Update the minimap camera's position to keep the player centered
+            Vector3 playerPosition = player.position + offsetFromPlayer;
+            playerPosition.y = transform.position.y; // Maintain the minimap's height
+            transform.position = playerPosition;
+        }
+
+        else if (currentScene.name == "City")
+        {
+            // If in the city scene, detach the minimap from the player
+            transform.parent = null;
+
+            // Smoothly interpolate the position towards the city's position
+            transform.position = Vector3.Lerp(transform.position, cityMiniMapPosition.position, smoothSpeed * Time.deltaTime);
+        }
     }
 }

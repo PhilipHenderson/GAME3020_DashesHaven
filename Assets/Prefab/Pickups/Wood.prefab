@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 826836419539214203}
   - component: {fileID: 4746862375848925801}
   m_Layer: 0
-  m_Name: WoodScraps
+  m_Name: Wood
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

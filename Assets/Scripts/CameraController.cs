@@ -16,6 +16,41 @@ public class CameraController : MonoBehaviour
     private float rotationInput = 0f;
     private Vector3 movementInput = Vector3.zero;
 
+    private static CameraController instance;
+    public static CameraController Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                // Try to find an existing instance in the scene
+                instance = FindObjectOfType<CameraController>();
+
+                // If no instance was found, create a new one
+                if (instance == null)
+                {
+                    GameObject cameraControllerObject = new GameObject("CameraController");
+                    instance = cameraControllerObject.AddComponent<CameraController>();
+                }
+            }
+            return instance;
+        }
+    }
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+            Debug.Log("CameraController instance created and marked as DontDestroyOnLoad.");
+        }
+        else
+        {
+            Debug.Log("Destroying duplicate CameraController instance.");
+            Destroy(gameObject);
+        }
+    }
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Confined;
@@ -48,6 +83,8 @@ public class CameraController : MonoBehaviour
 
         RotateCameraAroundPivot();
 
+        // Moving the camera with left click
+
         //if (Input.GetMouseButtonDown(0) && !isCameraMoving)
         //{
         //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -73,25 +110,25 @@ public class CameraController : MonoBehaviour
         Cursor.visible = true;
     }
 
-    IEnumerator MoveCamera(Vector3 targetPosition)
-    {
-        isCameraMoving = true;
+    //IEnumerator MoveCamera(Vector3 targetPosition)
+    //{
+    //    isCameraMoving = true;
 
-        Vector3 newPosition = new Vector3(targetPosition.x, cameraYPosition, targetPosition.z);
+    //    Vector3 newPosition = new Vector3(targetPosition.x, cameraYPosition, targetPosition.z);
 
-        while (Vector3.Distance(transform.position, newPosition) > 0.1f)
-        {
-            Vector3 newPos = Vector3.MoveTowards(transform.position, newPosition, cameraMoveSpeed * Time.deltaTime);
-            newPos.y = cameraYPosition; // Maintain the same Y position
-            transform.position = newPos;
+    //    while (Vector3.Distance(transform.position, newPosition) > 0.1f)
+    //    {
+    //        Vector3 newPos = Vector3.MoveTowards(transform.position, newPosition, cameraMoveSpeed * Time.deltaTime);
+    //        newPos.y = cameraYPosition; // Maintain the same Y position
+    //        transform.position = newPos;
 
-            Quaternion targetRotation = Quaternion.Euler(cameraAngle, transform.rotation.eulerAngles.y, 0);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * cameraMoveSpeed);
-            yield return null;
-        }
+    //        Quaternion targetRotation = Quaternion.Euler(cameraAngle, transform.rotation.eulerAngles.y, 0);
+    //        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * cameraMoveSpeed);
+    //        yield return null;
+    //    }
 
-        isCameraMoving = false;
-    }
+    //    isCameraMoving = false;
+    //}
 
     void RotateCameraAroundPivot()
     {

@@ -27,21 +27,22 @@ public class PlayerFishController : MonoBehaviour
     public int energy = 100;
     public int food = 0;
     public int stone = 0;
-    public int Stone{ get { return stone; } set { stone = value; } }
+    public int Stone { get { return stone; } set { stone = value; } }
     private int wood = 0;
-    public int Wood{  get { return wood; }  set { wood = value; } }
+    public int Wood { get { return wood; } set { wood = value; } }
     public float maxPickupRange = 3.0f; // Adjust the range as needed.
     public float sellRange = 2.0f;
 
     SellAreaController sellArea;
     CameraController cameraController;
+    InfoBar infoBar;
 
     public TopScreenUIController topScreenUIController;
 
     private static PlayerFishController instance;
     public static PlayerFishController Instance
     {
-        get {if (instance == null)
+        get { if (instance == null)
             {
                 // Try to find an existing instance in the scene
                 instance = FindObjectOfType<PlayerFishController>();
@@ -78,6 +79,7 @@ public class PlayerFishController : MonoBehaviour
         pickups = new List<Pickup>(FindObjectsOfType<Pickup>());
         sellArea = FindAnyObjectByType<SellAreaController>();
         cameraController = FindObjectOfType<CameraController>();
+        infoBar = FindAnyObjectByType<InfoBar>();
         DontDestroyOnLoad(gameObject);
         topScreenUIController.UpdateHPUI(100);
         topScreenUIController.UpdateEnergyUI(100);
@@ -117,7 +119,7 @@ public class PlayerFishController : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-            Debug.Log("clicked: " + hit.collider.name);
+                Debug.Log("clicked: " + hit.collider.name);
                 switch (hit.collider.tag)
                 {
                     case "Tile":
@@ -155,86 +157,113 @@ public class PlayerFishController : MonoBehaviour
                 }
             }
         }
-    }
-
-    void MoveToSellArea(Vector3 sellPosition)
-    {
-        float distanceToSellArea = Vector3.Distance(transform.position, sellPosition);
-
-        if (distanceToSellArea >= sellRange)
+        if (Input.GetMouseButtonDown(0))
         {
-            currentDestination = sellPosition;
-            if (!isMoving)
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
             {
-                StartCoroutine(MoveToTile(currentDestination));
+                Debug.Log("clicked: " + hit.collider.name);
+                Vector3 distance = transform.position - hit.collider.transform.position;
+                float approximateDistance = distance.magnitude;
+                switch (hit.collider.name)
+                {
+                    case "Wood(Clone)":
+                        infoBar.DisplayItemInfo(hit.collider.name, "Sturdy piece of HardWood!", 2, approximateDistance, "");
+                        break;
+                    case "Stone1(Clone)":
+                        infoBar.DisplayItemInfo(hit.collider.name, "Thick Stone, Great For Building!", 2, approximateDistance, "");
+                        break;
+                    case "Coral1(Clone)":
+                        infoBar.DisplayItemInfo(hit.collider.name, "Beautiful Coral, Great For Making Tools!", 2, approximateDistance, "");
+                        break;
+                    case "Food1(Clone)":
+                        infoBar.DisplayItemInfo(hit.collider.name, "Tasty Food, Keeps your energy Levels Up!", 2, approximateDistance, "");
+                        break;
+                    case "SellFish(Clone)":
+                        infoBar.DisplayItemInfo(hit.collider.name, "Sell Goods Here!", 1000000, approximateDistance, "");
+                        break;
+                    case "Cylinder":
+                        infoBar.DisplayItemInfo("Civizens Hut", "A Fishy Residence", 200, approximateDistance, "");
+                        break;
+                }
             }
         }
-    }
 
-    IEnumerator MoveToTile(Vector3 targetPosition)
-    {
-        isMoving = true;
-
-        Vector3 destination = new Vector3(targetPosition.x, aboveTileHeight, targetPosition.z);
-
-        while (Vector3.Distance(transform.position, destination) > 1.0f)
+        void MoveToSellArea(Vector3 sellPosition)
         {
-            // Update the current destination
-            destination = new Vector3(currentDestination.x, aboveTileHeight, currentDestination.z);
+            float distanceToSellArea = Vector3.Distance(transform.position, sellPosition);
 
-            // Move towards the destination
-            transform.position = Vector3.MoveTowards(transform.position, destination, moveSpeed * Time.deltaTime);
-
-            // Make the fish look at the destination
-            transform.LookAt(destination);
-
-            yield return null;
+            if (distanceToSellArea >= sellRange)
+            {
+                currentDestination = sellPosition;
+                if (!isMoving)
+                {
+                    StartCoroutine(MoveToTile(currentDestination));
+                }
+            }
         }
 
-        isMoving = false;
-        currentMoveCoroutine = null;
-    }
+        IEnumerator MoveToTile(Vector3 targetPosition)
+        {
+            isMoving = true;
 
-    // Function to stop the current movement coroutine.
-    void StopCurrentMovement()
-    {
-        if (currentMoveCoroutine != null)
-        {
-            StopCoroutine(currentMoveCoroutine);
-        }
-        isMoving = false;
-        currentMoveCoroutine = null;
-    }
+            Vector3 destination = new Vector3(targetPosition.x, aboveTileHeight, targetPosition.z);
 
-    public void StopMovementOnPortalCollision()
-    {
-        // Stop the fish's movement and reset its state.
-        StopCurrentMovement();
-    }
+            while (Vector3.Distance(transform.position, destination) > 1.0f)
+            {
+                // Update the current destination
+                destination = new Vector3(currentDestination.x, aboveTileHeight, currentDestination.z);
 
-    void CollectPickup(Pickup pickup)
-    {
-        if (pickup.pickupType == PickupType.Food)
-        {
-            food++;
-            Destroy(pickup.gameObject);
-        }
-        else if (pickup.pickupType == PickupType.Rock)
-        {
-            stone++;
-            Destroy(pickup.gameObject);
-        }
-        else if (pickup.pickupType == PickupType.Wood)
-        {
-            wood++;
-            Destroy(pickup.gameObject);
+                // Move towards the destination
+                transform.position = Vector3.MoveTowards(transform.position, destination, moveSpeed * Time.deltaTime);
+
+                // Make the fish look at the destination
+                transform.LookAt(destination);
+
+                yield return null;
+            }
+
+            isMoving = false;
+            currentMoveCoroutine = null;
         }
 
-        // Update the UI based on the collected pickup type and amount
-        topScreenUIController.UpdateFoodUI(food);
-        topScreenUIController.UpdateRocksUI(stone);
-        topScreenUIController.UpdateWoodUI(wood);
+        // Function to stop the current movement coroutine.
+        void StopCurrentMovement()
+        {
+            if (currentMoveCoroutine != null)
+            {
+                StopCoroutine(currentMoveCoroutine);
+            }
+            isMoving = false;
+            currentMoveCoroutine = null;
+        }
+
+        void CollectPickup(Pickup pickup)
+        {
+            if (pickup.pickupType == PickupType.Food)
+            {
+                food++;
+                Destroy(pickup.gameObject);
+            }
+            else if (pickup.pickupType == PickupType.Rock)
+            {
+                stone++;
+                Destroy(pickup.gameObject);
+            }
+            else if (pickup.pickupType == PickupType.Wood)
+            {
+                wood++;
+                Destroy(pickup.gameObject);
+            }
+
+            // Update the UI based on the collected pickup type and amount
+            topScreenUIController.UpdateFoodUI(food);
+            topScreenUIController.UpdateRocksUI(stone);
+            topScreenUIController.UpdateWoodUI(wood);
+        }
+
+
     }
-
-
 }
