@@ -10,6 +10,7 @@ public class TopScreenUIController : MonoBehaviour
     public TextMeshProUGUI foodText;
     public TextMeshProUGUI rocksText;
     public TextMeshProUGUI woodText;
+    public TextMeshProUGUI coralText;
 
     public void UpdateHPUI(int hp)
     {
@@ -26,13 +27,18 @@ public class TopScreenUIController : MonoBehaviour
         foodText.text = "Food: " + food;
     }
 
-    public void UpdateRocksUI(int rocks)
+    public void UpdateRocksUI(int stone)
     {
-        rocksText.text = "Rocks: " + rocks;
+        rocksText.text = "Stone: " + stone;
     }
 
     public void UpdateWoodUI(int wood)
     {
         woodText.text = "Wood: " + wood;
+    }
+
+    public void UpdateCoralUI(int coral)
+    {
+        coralText.text = "Coral: " + coral;
     }
 }

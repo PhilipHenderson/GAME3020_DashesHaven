@@ -22,6 +22,11 @@ public class InfoBar : MonoBehaviour
         itemInfoText.text = formattedInfo;
     }
 
+    public void DisplayBlank()
+    {
+        itemInfoText.text = "";
+    }
+
     public void ClearItemInfo()
     {
         itemInfoText.text = "";

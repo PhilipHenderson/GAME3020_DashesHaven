@@ -1442,7 +1442,7 @@ RectTransform:
   m_GameObject: {fileID: 4147984122407759495}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 40}
-  m_LocalScale: {x: 1.65, y: 0.7802284, z: 1.7854668}
+  m_LocalScale: {x: 1.52, y: 0.7187558, z: 1.6447936}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4357200666530162312}
@@ -1450,7 +1450,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 247, y: -111}
+  m_AnchoredPosition: {x: 246.4, y: -105.4}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &727466086622183481
@@ -1592,7 +1592,7 @@ RectTransform:
   m_GameObject: {fileID: 4427213121910432042}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 40}
-  m_LocalScale: {x: 1.65, y: 0.50682104, z: 1.1709124}
+  m_LocalScale: {x: 1.52, y: 0.46688968, z: 1.0786586}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 680773955198604114}
@@ -1600,7 +1600,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 246, y: -129.99998}
+  m_AnchoredPosition: {x: 245.39995, y: -124.399895}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4542462874389038701
@@ -1761,7 +1761,7 @@ RectTransform:
   m_GameObject: {fileID: 4825054577021321243}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.21, y: 1.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9144386631747254883}
@@ -2942,7 +2942,7 @@ Canvas:
   m_GameObject: {fileID: 9026464969236105730}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 1.74
   m_PixelPerfect: 0
@@ -2992,7 +2992,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
+  m_BlockingObjects: 3
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295

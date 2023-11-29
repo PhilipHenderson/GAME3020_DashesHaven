@@ -30,6 +30,8 @@ public class PlayerFishController : MonoBehaviour
     public int Stone { get { return stone; } set { stone = value; } }
     private int wood = 0;
     public int Wood { get { return wood; } set { wood = value; } }
+    private int coral = 0;
+    public int Coral { get { return coral; } set { coral = value; } }
     public float maxPickupRange = 3.0f; // Adjust the range as needed.
     public float sellRange = 2.0f;
 
@@ -86,6 +88,7 @@ public class PlayerFishController : MonoBehaviour
         topScreenUIController.UpdateFoodUI(100);
         topScreenUIController.UpdateRocksUI(0);
         topScreenUIController.UpdateWoodUI(0);
+        topScreenUIController.UpdateCoralUI(0);
     }
 
     void Update()
@@ -167,6 +170,7 @@ public class PlayerFishController : MonoBehaviour
                 Debug.Log("clicked: " + hit.collider.name);
                 Vector3 distance = transform.position - hit.collider.transform.position;
                 float approximateDistance = distance.magnitude;
+
                 switch (hit.collider.name)
                 {
                     case "Wood(Clone)":
@@ -186,6 +190,12 @@ public class PlayerFishController : MonoBehaviour
                         break;
                     case "Cylinder":
                         infoBar.DisplayItemInfo("Civizens Hut", "A Fishy Residence", 200, approximateDistance, "");
+                        break;
+                    case "CityTile(Clone)":
+                        infoBar.DisplayBlank();
+                        break;
+                    case "BaseTile(Clone)":
+                        infoBar.DisplayBlank();
                         break;
                 }
             }
@@ -257,11 +267,17 @@ public class PlayerFishController : MonoBehaviour
                 wood++;
                 Destroy(pickup.gameObject);
             }
+            else if (pickup.pickupType == PickupType.Coral)
+            {
+                coral++;
+                Destroy(pickup.gameObject);
+            }
 
             // Update the UI based on the collected pickup type and amount
             topScreenUIController.UpdateFoodUI(food);
             topScreenUIController.UpdateRocksUI(stone);
             topScreenUIController.UpdateWoodUI(wood);
+            topScreenUIController.UpdateCoralUI(coral);
         }
 
 
