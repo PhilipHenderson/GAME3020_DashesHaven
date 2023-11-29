@@ -1,9 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
+using UnityEngine.UI;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlayerFishController : MonoBehaviour
 {
@@ -28,12 +26,15 @@ public class PlayerFishController : MonoBehaviour
     public int hp = 100;
     public int energy = 100;
     public int food = 0;
-    public int rocks = 0;
-    public int wood = 0;
+    public int stone = 0;
+    public int Stone{ get { return stone; } set { stone = value; } }
+    private int wood = 0;
+    public int Wood{  get { return wood; }  set { wood = value; } }
     public float maxPickupRange = 3.0f; // Adjust the range as needed.
     public float sellRange = 2.0f;
 
     SellAreaController sellArea;
+    CameraController cameraController;
 
     public TopScreenUIController topScreenUIController;
 
@@ -76,6 +77,7 @@ public class PlayerFishController : MonoBehaviour
         // Find all Pickup components in the scene and put them in the list
         pickups = new List<Pickup>(FindObjectsOfType<Pickup>());
         sellArea = FindAnyObjectByType<SellAreaController>();
+        cameraController = FindObjectOfType<CameraController>();
         DontDestroyOnLoad(gameObject);
         topScreenUIController.UpdateHPUI(100);
         topScreenUIController.UpdateEnergyUI(100);
@@ -86,6 +88,28 @@ public class PlayerFishController : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKey(KeyCode.C))
+        {
+            wood++;
+            topScreenUIController.UpdateWoodUI(wood);
+        }
+
+        #region
+        bool isPopupWindowOpen = sellArea.IsPopUpWindowOpen();
+        if (isPopupWindowOpen)
+        {
+            isMoving = true;
+            // Stop camera movement...
+            cameraController.cameraMoveSpeed = 0.0f;
+        }
+        else
+        {
+            isMoving = false;
+            // Allow camera movement...
+            cameraController.cameraMoveSpeed = 10.0f;
+        }
+        #endregion
+
         if (Input.GetMouseButtonDown(1))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -93,46 +117,57 @@ public class PlayerFishController : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.collider.CompareTag("Tile") || hit.collider.CompareTag("CityTile") || hit.collider.CompareTag("Portal"))
+            Debug.Log("clicked: " + hit.collider.name);
+                switch (hit.collider.tag)
                 {
-                    Tile tile = hit.collider.GetComponent<Tile>();
-                    if (tile != null)
-                    {
-                        currentDestination = tile.transform.position;
-                        if (!isMoving)
+                    case "Tile":
+                    case "CityTile":
+                    case "Portal":
+                        Tile tile = hit.collider.GetComponent<Tile>();
+                        if (tile != null)
                         {
-                            StartCoroutine(MoveToTile(currentDestination));
+                            currentDestination = tile.transform.position;
+                            if (!isMoving)
+                            {
+                                StartCoroutine(MoveToTile(currentDestination));
+                            }
                         }
-                    }
-                }
-                else if (hit.collider.CompareTag("Pickup"))
-                {
-                    Pickup pickup = hit.collider.GetComponent<Pickup>();
-                    if (pickup != null)
-                    {
-                        float distanceToPickup = Vector3.Distance(transform.position, pickup.transform.position);
-                        if (distanceToPickup <= maxPickupRange)
-                        {
-                            // Call the CollectPickup method to handle pickup collection
-                            CollectPickup(pickup);
-                        }
-                    }
-                }
-                else if (hit.collider.CompareTag("SellFish"))
-                {
-                    float distanceToSellArea = Vector3.Distance(transform.position, hit.collider.transform.position);
+                        break;
 
-                    OpenSellWindow();
+                    case "Pickup":
+                        Pickup pickup = hit.collider.GetComponent<Pickup>();
+                        if (pickup != null)
+                        {
+                            float distanceToPickup = Vector3.Distance(transform.position, pickup.transform.position);
+                            if (distanceToPickup <= maxPickupRange)
+                            {
+                                // Call the CollectPickup method to handle pickup collection
+                                CollectPickup(pickup);
+                            }
+                        }
+                        break;
+
+                    case "SellFishArea":
+                        Debug.Log("clicked SellFishArea");
+                        MoveToSellArea(hit.collider.transform.position);
+                        Debug.Log("Touching: " + hit.collider.name);
+                        break;
                 }
             }
         }
     }
 
-    void OpenSellWindow()
+    void MoveToSellArea(Vector3 sellPosition)
     {
-        if (sellArea.playerInRange == true)
+        float distanceToSellArea = Vector3.Distance(transform.position, sellPosition);
+
+        if (distanceToSellArea >= sellRange)
         {
-            sellArea.popUpWindow.SetActive(true);
+            currentDestination = sellPosition;
+            if (!isMoving)
+            {
+                StartCoroutine(MoveToTile(currentDestination));
+            }
         }
     }
 
@@ -186,7 +221,7 @@ public class PlayerFishController : MonoBehaviour
         }
         else if (pickup.pickupType == PickupType.Rock)
         {
-            rocks++;
+            stone++;
             Destroy(pickup.gameObject);
         }
         else if (pickup.pickupType == PickupType.Wood)
@@ -197,7 +232,9 @@ public class PlayerFishController : MonoBehaviour
 
         // Update the UI based on the collected pickup type and amount
         topScreenUIController.UpdateFoodUI(food);
-        topScreenUIController.UpdateRocksUI(rocks);
+        topScreenUIController.UpdateRocksUI(stone);
         topScreenUIController.UpdateWoodUI(wood);
     }
+
+
 }

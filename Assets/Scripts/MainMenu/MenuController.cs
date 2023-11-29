@@ -15,6 +15,6 @@ public class MenuController : MonoBehaviour
     public void Instructional()
     {
         // Load the main scene when the "New Game" button is pressed.
-        SceneManager.LoadScene("SeaBed");
+        SceneManager.LoadScene("City");
     }
 }

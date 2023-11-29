@@ -48,17 +48,17 @@ public class CameraController : MonoBehaviour
 
         RotateCameraAroundPivot();
 
-        if (Input.GetMouseButtonDown(0) && !isCameraMoving)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+        //if (Input.GetMouseButtonDown(0) && !isCameraMoving)
+        //{
+        //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //    RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit))
-            {
-                Vector3 targetPosition = hit.point;
-                StartCoroutine(MoveCamera(targetPosition));
-            }
-        }
+        //    if (Physics.Raycast(ray, out hit))
+        //    {
+        //        Vector3 targetPosition = hit.point;
+        //        StartCoroutine(MoveCamera(targetPosition));
+        //    }
+        //}
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -70,7 +70,7 @@ public class CameraController : MonoBehaviour
     {
         isCursorLocked = !isCursorLocked;
         Cursor.lockState = isCursorLocked ? CursorLockMode.Locked : CursorLockMode.Confined;
-        Cursor.visible = !isCursorLocked;
+        Cursor.visible = true;
     }
 
     IEnumerator MoveCamera(Vector3 targetPosition)
