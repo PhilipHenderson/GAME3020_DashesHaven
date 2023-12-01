@@ -15,6 +15,7 @@ TagManager:
   - CityTile
   - SellFish
   - SellFishArea
+  - TopScreenUI
   layers:
   - Default
   - TransparentFX

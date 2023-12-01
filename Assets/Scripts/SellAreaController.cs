@@ -10,23 +10,25 @@ public class SellAreaController : MonoBehaviour
     public bool playerInRange; // Define playerInRange here.
 
     public PlayerFishController playerFishController;
+    public GameObject topScreenUIController;
     public int currentWood;
     public int currentStone;
+    public int currentCoral;
 
-    public int DisplayWood { set { currentWood = playerFishController.Wood; } }
-    public int DisplayStone;
+    private void Awake()
+    {
+        playerObject = GameObject.FindGameObjectWithTag("Player");
 
-
+    }
     private void Start()
     {
-        playerFishController = FindAnyObjectByType<PlayerFishController>();
-        playerObject = GameObject.FindGameObjectWithTag("Player");
+        topScreenUIController = GameObject.FindGameObjectWithTag("TopScreenUI");
+        playerFishController = playerObject.GetComponent<PlayerFishController>();
         if (popUpWindow != null)
         {
             popUpWindow.SetActive(false);
         }
     }
-
     private void Update()
     {
         if (playerObject != null)
@@ -66,11 +68,11 @@ public class SellAreaController : MonoBehaviour
             Debug.LogWarning("Player reference is null.");
         }
     }
-
     public void FixedUpdate()
     {
         currentWood = playerFishController.Wood;
         currentStone = playerFishController.Stone;
+        currentCoral = playerFishController.Coral;
     }
 
     public bool IsPopUpWindowOpen()
@@ -87,16 +89,48 @@ public class SellAreaController : MonoBehaviour
     {
         Debug.Log("Pressing Sell Wood Button");
         playerFishController.Wood = 0;
+        currentWood = playerFishController.Wood;
+        playerFishController.topScreenUIController.UpdateWoodUI(currentWood);
+    }
+
+    public void BuyWood()
+    {
+        Debug.Log("Pressing Buy Wood Button");
+        playerFishController.Wood += 10;
+        currentWood = playerFishController.Wood;
+        playerFishController.topScreenUIController.UpdateWoodUI(currentWood);
     }
 
     public void SellStone()
     {
+        Debug.Log("Pressing Sell Stone Button");
         playerFishController.Stone = 0;
+        currentStone = playerFishController.Stone;
+        playerFishController.topScreenUIController.UpdateStoneUI(currentStone);
+    }
+
+    public void BuyStone()
+    {
+        Debug.Log("Pressing Buy Stone Button");
+        playerFishController.Stone += 10;
+        currentStone = playerFishController.Stone;
+        playerFishController.topScreenUIController.UpdateStoneUI(currentStone);
     }
 
     public void SellCoral()
     {
+        Debug.Log("Pressing Sell Coral Button");
+        playerFishController.Coral = 0;
+        currentCoral = playerFishController.Coral;
+        playerFishController.topScreenUIController.UpdateCoralUI(currentCoral);
+    }
 
+    public void BuyCoral()
+    {
+        Debug.Log("Pressing Buy Coral Button");
+        playerFishController.Coral += 10;
+        currentCoral = playerFishController.Coral;
+        playerFishController.topScreenUIController.UpdateCoralUI(currentCoral);
     }
 
     // Add any other functionalities or interactions here.

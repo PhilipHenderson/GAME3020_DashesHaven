@@ -27,7 +27,7 @@ public class TopScreenUIController : MonoBehaviour
         foodText.text = "Food: " + food;
     }
 
-    public void UpdateRocksUI(int stone)
+    public void UpdateStoneUI(int stone)
     {
         rocksText.text = "Stone: " + stone;
     }

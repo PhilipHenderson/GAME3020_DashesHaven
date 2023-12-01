@@ -86,7 +86,7 @@ public class PlayerFishController : MonoBehaviour
         topScreenUIController.UpdateHPUI(100);
         topScreenUIController.UpdateEnergyUI(100);
         topScreenUIController.UpdateFoodUI(100);
-        topScreenUIController.UpdateRocksUI(0);
+        topScreenUIController.UpdateStoneUI(0);
         topScreenUIController.UpdateWoodUI(0);
         topScreenUIController.UpdateCoralUI(0);
     }
@@ -103,13 +103,13 @@ public class PlayerFishController : MonoBehaviour
         bool isPopupWindowOpen = sellArea.IsPopUpWindowOpen();
         if (isPopupWindowOpen)
         {
-            isMoving = true;
+            //isMoving = true;
             // Stop camera movement...
             cameraController.cameraMoveSpeed = 0.0f;
         }
         else
         {
-            isMoving = false;
+            //isMoving = false;
             // Allow camera movement...
             cameraController.cameraMoveSpeed = 10.0f;
         }
@@ -214,7 +214,7 @@ public class PlayerFishController : MonoBehaviour
                 }
             }
         }
-
+        
         IEnumerator MoveToTile(Vector3 targetPosition)
         {
             isMoving = true;
@@ -275,7 +275,7 @@ public class PlayerFishController : MonoBehaviour
 
             // Update the UI based on the collected pickup type and amount
             topScreenUIController.UpdateFoodUI(food);
-            topScreenUIController.UpdateRocksUI(stone);
+            topScreenUIController.UpdateStoneUI(stone);
             topScreenUIController.UpdateWoodUI(wood);
             topScreenUIController.UpdateCoralUI(coral);
         }
