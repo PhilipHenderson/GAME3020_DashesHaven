@@ -8,9 +8,10 @@ public class TopScreenUIController : MonoBehaviour
     public TextMeshProUGUI hpText;
     public TextMeshProUGUI energyText;
     public TextMeshProUGUI foodText;
-    public TextMeshProUGUI rocksText;
+    public TextMeshProUGUI stoneText;
     public TextMeshProUGUI woodText;
     public TextMeshProUGUI coralText;
+    public TextMeshProUGUI moneyText;
 
     public void UpdateHPUI(int hp)
     {
@@ -29,7 +30,7 @@ public class TopScreenUIController : MonoBehaviour
 
     public void UpdateStoneUI(int stone)
     {
-        rocksText.text = "Stone: " + stone;
+        stoneText.text = "Stone: " + stone;
     }
 
     public void UpdateWoodUI(int wood)
@@ -40,5 +41,10 @@ public class TopScreenUIController : MonoBehaviour
     public void UpdateCoralUI(int coral)
     {
         coralText.text = "Coral: " + coral;
+    }
+
+    public void UpdateMoneyUI(int money)
+    {
+        moneyText.text = "Money: " + money;
     }
 }

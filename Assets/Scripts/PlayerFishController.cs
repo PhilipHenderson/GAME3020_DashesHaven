@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using Unity.VisualScripting;
 
 public class PlayerFishController : MonoBehaviour
 {
@@ -24,14 +25,26 @@ public class PlayerFishController : MonoBehaviour
 
     [Header("Player Settings")]
     public int hp = 100;
+    public int Health { get { return hp; } set { hp = value; } }
+
     public int energy = 100;
+    public int Energy { get { return energy; } set { energy = value; } }
+
     public int food = 0;
+    public int Food { get { return food; } set { food = value; } }
+
+    public int money = 0;
+    public int Money { get { return money; } set { money = value; } }
+
     public int stone = 0;
     public int Stone { get { return stone; } set { stone = value; } }
+
     private int wood = 0;
     public int Wood { get { return wood; } set { wood = value; } }
+
     private int coral = 0;
     public int Coral { get { return coral; } set { coral = value; } }
+
     public float maxPickupRange = 3.0f; // Adjust the range as needed.
     public float sellRange = 2.0f;
 
@@ -44,7 +57,9 @@ public class PlayerFishController : MonoBehaviour
     private static PlayerFishController instance;
     public static PlayerFishController Instance
     {
-        get { if (instance == null)
+        get
+        {
+            if (instance == null)
             {
                 // Try to find an existing instance in the scene
                 instance = FindObjectOfType<PlayerFishController>();
@@ -86,18 +101,23 @@ public class PlayerFishController : MonoBehaviour
         topScreenUIController.UpdateHPUI(100);
         topScreenUIController.UpdateEnergyUI(100);
         topScreenUIController.UpdateFoodUI(100);
-        topScreenUIController.UpdateStoneUI(0);
         topScreenUIController.UpdateWoodUI(0);
+        topScreenUIController.UpdateStoneUI(0);
         topScreenUIController.UpdateCoralUI(0);
+        topScreenUIController.UpdateMoneyUI(0);
+        EnergyControl();
     }
 
     void Update()
     {
+        UpdateUI();
+
         if (Input.GetKey(KeyCode.C))
         {
             wood++;
-            topScreenUIController.UpdateWoodUI(wood);
+            stone++;
         }
+
 
         #region
         bool isPopupWindowOpen = sellArea.IsPopUpWindowOpen();
@@ -201,85 +221,102 @@ public class PlayerFishController : MonoBehaviour
             }
         }
 
-        void MoveToSellArea(Vector3 sellPosition)
-        {
-            float distanceToSellArea = Vector3.Distance(transform.position, sellPosition);
+    }
 
-            if (distanceToSellArea >= sellRange)
+    private void UpdateUI()
+    {
+        topScreenUIController.UpdateHPUI(hp);
+        topScreenUIController.UpdateEnergyUI(energy);
+        topScreenUIController.UpdateFoodUI(food);
+        topScreenUIController.UpdateWoodUI(wood);
+        topScreenUIController.UpdateStoneUI(stone);
+        topScreenUIController.UpdateCoralUI(coral);
+        topScreenUIController.UpdateMoneyUI(money);
+    }
+
+    void MoveToSellArea(Vector3 sellPosition)
+    {
+        float distanceToSellArea = Vector3.Distance(transform.position, sellPosition);
+
+        if (distanceToSellArea >= sellRange)
+        {
+            currentDestination = sellPosition;
+            if (!isMoving)
             {
-                currentDestination = sellPosition;
-                if (!isMoving)
-                {
-                    StartCoroutine(MoveToTile(currentDestination));
-                }
+                StartCoroutine(MoveToTile(currentDestination));
             }
         }
+    }
+
+    IEnumerator MoveToTile(Vector3 targetPosition)
+    {
+        isMoving = true;
+
+        Vector3 destination = new Vector3(targetPosition.x, aboveTileHeight, targetPosition.z);
+
+        while (Vector3.Distance(transform.position, destination) > 1.0f)
+        {
+            // Update the current destination
+            destination = new Vector3(currentDestination.x, aboveTileHeight, currentDestination.z);
+
+            // Move towards the destination
+            transform.position = Vector3.MoveTowards(transform.position, destination, moveSpeed * Time.deltaTime);
+
+            // Make the fish look at the destination
+            transform.LookAt(destination);
+
+            yield return null;
+        }
+
+        isMoving = false;
+        currentMoveCoroutine = null;
+    }
+
+    void CollectPickup(Pickup pickup)
+    {
+        if (pickup.pickupType == PickupType.Food)
+        {
+            food++;
+            Destroy(pickup.gameObject);
+        }
+        else if (pickup.pickupType == PickupType.Rock)
+        {
+            stone++;
+            Destroy(pickup.gameObject);
+        }
+        else if (pickup.pickupType == PickupType.Wood)
+        {
+            wood++;
+            Destroy(pickup.gameObject);
+        }
+        else if (pickup.pickupType == PickupType.Coral)
+        {
+            coral++;
+            Destroy(pickup.gameObject);
+        }
+
+        // Update the UI based on the collected pickup type and amount
+        topScreenUIController.UpdateFoodUI(food);
+        topScreenUIController.UpdateStoneUI(stone);
+        topScreenUIController.UpdateWoodUI(wood);
+        topScreenUIController.UpdateCoralUI(coral);
+    }
+
+    void HealthControl()
+    {
         
-        IEnumerator MoveToTile(Vector3 targetPosition)
-        {
-            isMoving = true;
+    }
 
-            Vector3 destination = new Vector3(targetPosition.x, aboveTileHeight, targetPosition.z);
+    IEnumerator EnergyControl()
+    {
+        Energy--;
 
-            while (Vector3.Distance(transform.position, destination) > 1.0f)
-            {
-                // Update the current destination
-                destination = new Vector3(currentDestination.x, aboveTileHeight, currentDestination.z);
+        yield return new WaitForSeconds(1.0f);
+    }
 
-                // Move towards the destination
-                transform.position = Vector3.MoveTowards(transform.position, destination, moveSpeed * Time.deltaTime);
-
-                // Make the fish look at the destination
-                transform.LookAt(destination);
-
-                yield return null;
-            }
-
-            isMoving = false;
-            currentMoveCoroutine = null;
-        }
-
-        // Function to stop the current movement coroutine.
-        void StopCurrentMovement()
-        {
-            if (currentMoveCoroutine != null)
-            {
-                StopCoroutine(currentMoveCoroutine);
-            }
-            isMoving = false;
-            currentMoveCoroutine = null;
-        }
-
-        void CollectPickup(Pickup pickup)
-        {
-            if (pickup.pickupType == PickupType.Food)
-            {
-                food++;
-                Destroy(pickup.gameObject);
-            }
-            else if (pickup.pickupType == PickupType.Rock)
-            {
-                stone++;
-                Destroy(pickup.gameObject);
-            }
-            else if (pickup.pickupType == PickupType.Wood)
-            {
-                wood++;
-                Destroy(pickup.gameObject);
-            }
-            else if (pickup.pickupType == PickupType.Coral)
-            {
-                coral++;
-                Destroy(pickup.gameObject);
-            }
-
-            // Update the UI based on the collected pickup type and amount
-            topScreenUIController.UpdateFoodUI(food);
-            topScreenUIController.UpdateStoneUI(stone);
-            topScreenUIController.UpdateWoodUI(wood);
-            topScreenUIController.UpdateCoralUI(coral);
-        }
-
+    void FoodControl()
+    {
 
     }
 }
+

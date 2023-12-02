@@ -248,23 +248,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!1 &179827721 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2247402507759558180, guid: 76e04b603c709b345933367f2ae21845, type: 3}
-  m_PrefabInstance: {fileID: 494592682}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &179827723
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 179827721}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 641b8c6a37ca71b4fadc4fcc25e417ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &279517295
 GameObject:
   m_ObjectHideFlags: 0
@@ -445,10 +428,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2247402507759558180, guid: 76e04b603c709b345933367f2ae21845, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 179827723}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 76e04b603c709b345933367f2ae21845, type: 3}
 --- !u!114 &494592683 stripped
 MonoBehaviour:
@@ -899,10 +879,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 519223262334779148, guid: 5eee85629b7726845bb7ae8f473ecc26, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
     - target: {fileID: 3981693895365636410, guid: 5eee85629b7726845bb7ae8f473ecc26, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10

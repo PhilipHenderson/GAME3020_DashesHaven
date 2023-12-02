@@ -11,14 +11,20 @@ public class SellAreaController : MonoBehaviour
 
     public PlayerFishController playerFishController;
     public GameObject topScreenUIController;
+
     public int currentWood;
     public int currentStone;
     public int currentCoral;
+    public int currentMoney;
+
+    public int woodCost;
+    public int stoneCost;
+    public int coralCost;
+    public int foodCost;
 
     private void Awake()
     {
         playerObject = GameObject.FindGameObjectWithTag("Player");
-
     }
     private void Start()
     {
@@ -73,6 +79,7 @@ public class SellAreaController : MonoBehaviour
         currentWood = playerFishController.Wood;
         currentStone = playerFishController.Stone;
         currentCoral = playerFishController.Coral;
+        currentMoney = playerFishController.Money;
     }
 
     public bool IsPopUpWindowOpen()
@@ -87,50 +94,104 @@ public class SellAreaController : MonoBehaviour
 
     public void SellWood()
     {
-        Debug.Log("Pressing Sell Wood Button");
-        playerFishController.Wood = 0;
-        currentWood = playerFishController.Wood;
+        if (playerFishController.Wood >= 2)
+        {
+            Debug.Log("Pressing Sell Wood Button");
+            playerFishController.Money += currentWood * 2;
+            playerFishController.Wood = 0;
+        }
+        else
+        {
+            Debug.Log("Not Enough Wood");
+        }
+
         playerFishController.topScreenUIController.UpdateWoodUI(currentWood);
+        playerFishController.topScreenUIController.UpdateMoneyUI(currentMoney);
     }
 
     public void BuyWood()
     {
-        Debug.Log("Pressing Buy Wood Button");
-        playerFishController.Wood += 10;
-        currentWood = playerFishController.Wood;
+        if (playerFishController.Money >= 10)
+        {
+            Debug.Log("Pressing Buy Wood Button");
+            playerFishController.Wood += 2;
+            playerFishController.Money -= woodCost;
+            currentWood = playerFishController.Wood;
+        }
+        else
+        {
+            Debug.Log("Not Enough Money");
+        }
         playerFishController.topScreenUIController.UpdateWoodUI(currentWood);
+        playerFishController.topScreenUIController.UpdateMoneyUI(currentMoney);
     }
 
     public void SellStone()
     {
-        Debug.Log("Pressing Sell Stone Button");
-        playerFishController.Stone = 0;
-        currentStone = playerFishController.Stone;
+        if (playerFishController.Stone >= stoneCost)
+        {
+            Debug.Log("Pressing Sell Stone Button");
+            playerFishController.Money += currentStone * 2;
+            playerFishController.Stone = 0;
+        }
+        else
+        {
+            Debug.Log("Not Enough Stone");
+        }
+
         playerFishController.topScreenUIController.UpdateStoneUI(currentStone);
+        playerFishController.topScreenUIController.UpdateMoneyUI(currentMoney);
     }
 
     public void BuyStone()
     {
-        Debug.Log("Pressing Buy Stone Button");
-        playerFishController.Stone += 10;
-        currentStone = playerFishController.Stone;
+        if (playerFishController.Money >= stoneCost)
+        {
+            Debug.Log("Pressing Buy Stone Button");
+            playerFishController.Stone += 10;
+            playerFishController.Money -= stoneCost;
+            currentStone = playerFishController.Stone;
+        }
+        else
+        {
+            Debug.Log("Not Enough Money");
+        }
         playerFishController.topScreenUIController.UpdateStoneUI(currentStone);
+        playerFishController.topScreenUIController.UpdateMoneyUI(currentMoney);
     }
 
     public void SellCoral()
     {
-        Debug.Log("Pressing Sell Coral Button");
-        playerFishController.Coral = 0;
-        currentCoral = playerFishController.Coral;
+        if (playerFishController.Coral >= 2)
+        {
+            Debug.Log("Pressing Sell Coral Button");
+            playerFishController.Money += currentCoral * 2;
+            playerFishController.Coral = 0;
+        }
+        else
+        {
+            Debug.Log("Not Enough Coral");
+        }
+
         playerFishController.topScreenUIController.UpdateCoralUI(currentCoral);
+        playerFishController.topScreenUIController.UpdateMoneyUI(currentMoney);
     }
 
     public void BuyCoral()
     {
-        Debug.Log("Pressing Buy Coral Button");
-        playerFishController.Coral += 10;
-        currentCoral = playerFishController.Coral;
+        if (playerFishController.Money >= coralCost)
+        {
+            Debug.Log("Pressing Buy Coral Button");
+            playerFishController.Coral += 10;
+            playerFishController.Money -= coralCost;
+            currentCoral = playerFishController.Coral;
+        }
+        else
+        {
+            Debug.Log("Not Enough Money");
+        }
         playerFishController.topScreenUIController.UpdateCoralUI(currentCoral);
+        playerFishController.topScreenUIController.UpdateMoneyUI(currentMoney);
     }
 
     // Add any other functionalities or interactions here.

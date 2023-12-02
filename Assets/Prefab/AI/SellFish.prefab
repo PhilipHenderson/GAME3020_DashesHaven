@@ -234,6 +234,11 @@ MonoBehaviour:
   currentWood: 0
   currentStone: 0
   currentCoral: 0
+  currentMoney: 0
+  woodCost: 10
+  stoneCost: 15
+  coralCost: 50
+  foodCost: 0
 --- !u!1 &6356403713802312646
 GameObject:
   m_ObjectHideFlags: 0

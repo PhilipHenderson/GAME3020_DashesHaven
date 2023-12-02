@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8339166304246987189}
   m_Layer: 0
   m_Name: Fish1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -189,6 +189,7 @@ MonoBehaviour:
   hp: 100
   energy: 100
   food: 0
+  money: 0
   stone: 0
   maxPickupRange: 5
   sellRange: 2
