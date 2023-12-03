@@ -56,6 +56,8 @@ public class TileMapGenerator : MonoBehaviour
         SpawnObjects();
         SpawnPortal();
 
+        portal.GetComponent<Portal>().destinationSceneName = "City";
+
         // Get the player's Collider component.
         Collider playerCollider = playerGameObject.GetComponent<Collider>();
 

@@ -9,7 +9,7 @@ public class PlayerFishController : MonoBehaviour
     public float moveSpeed = 5.0f;
     public float aboveTileHeight = 0.8f;
 
-    private bool isMoving = false;
+    public bool isMoving = false;
 
     private Pickup targetPickup;
     public List<Pickup> pickups;
@@ -96,6 +96,7 @@ public class PlayerFishController : MonoBehaviour
         pickups = new List<Pickup>(FindObjectsOfType<Pickup>());
         sellArea = FindAnyObjectByType<SellAreaController>();
         cameraController = FindObjectOfType<CameraController>();
+        topScreenUIController = FindAnyObjectByType<TopScreenUIController>();
         infoBar = FindAnyObjectByType<InfoBar>();
         DontDestroyOnLoad(gameObject);
         topScreenUIController.UpdateHPUI(100);
@@ -110,7 +111,12 @@ public class PlayerFishController : MonoBehaviour
 
     void Update()
     {
-        UpdateUI();
+
+        if (topScreenUIController == null)
+        {
+            topScreenUIController = FindAnyObjectByType<TopScreenUIController>();
+        }
+
 
         if (Input.GetKey(KeyCode.C))
         {
@@ -120,18 +126,21 @@ public class PlayerFishController : MonoBehaviour
 
 
         #region
-        bool isPopupWindowOpen = sellArea.IsPopUpWindowOpen();
-        if (isPopupWindowOpen)
+        if (sellArea != null)
         {
-            //isMoving = true;
-            // Stop camera movement...
-            cameraController.cameraMoveSpeed = 0.0f;
-        }
-        else
-        {
-            //isMoving = false;
-            // Allow camera movement...
-            cameraController.cameraMoveSpeed = 10.0f;
+            bool isPopupWindowOpen = sellArea.IsPopUpWindowOpen();
+            if (isPopupWindowOpen)
+            {
+                //isMoving = true;
+                // Stop camera movement...
+                cameraController.cameraMoveSpeed = 0.0f;
+            }
+            else
+            {
+                //isMoving = false;
+                // Allow camera movement...
+                cameraController.cameraMoveSpeed = 10.0f;
+            }
         }
         #endregion
 
@@ -220,13 +229,12 @@ public class PlayerFishController : MonoBehaviour
                 }
             }
         }
-
+        UpdateUI();
     }
 
     private void UpdateUI()
     {
         topScreenUIController.UpdateHPUI(hp);
-        topScreenUIController.UpdateEnergyUI(energy);
         topScreenUIController.UpdateFoodUI(food);
         topScreenUIController.UpdateWoodUI(wood);
         topScreenUIController.UpdateStoneUI(stone);
@@ -310,7 +318,7 @@ public class PlayerFishController : MonoBehaviour
     IEnumerator EnergyControl()
     {
         Energy--;
-
+        topScreenUIController.UpdateEnergyUI(energy);
         yield return new WaitForSeconds(1.0f);
     }
 
@@ -318,5 +326,18 @@ public class PlayerFishController : MonoBehaviour
     {
 
     }
+
+    public void FreezePlayer()
+    {
+        isMoving = false;
+        StopAllCoroutines();
+    }
+
+    public void UnfreezePlayer()
+    {
+        StartCoroutine(MoveToTile(currentDestination));
+        isMoving = true;
+    }
+
 }
 

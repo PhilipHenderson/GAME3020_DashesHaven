@@ -18,7 +18,6 @@ public class CityMapGenerator : MonoBehaviour
     public GameObject cityTilePrefab;
     public GameObject buildingPrefab;
     public GameObject roadPrefab;
-    public GameObject lamppostPrefab;
 
     [Header("Building Spawn Settings")]
     public GameObject mainCityBuildingPrefab;
@@ -51,6 +50,9 @@ public class CityMapGenerator : MonoBehaviour
     [Header("AI Settings")]
     public GameObject sellFish;
 
+    [Header("Building Prefabs")]
+    public GameObject Shop;
+    public GameObject lamppostPrefab;
 
 
     void Start()
@@ -61,8 +63,8 @@ public class CityMapGenerator : MonoBehaviour
         SpawnCityObjects();
         SpawnCityWalls();
         spawnPos.x = portal.transform.position.x + 10.0f;
+        portal.GetComponent<Portal>().destinationSceneName = "SeaBed";
         Instantiate(player, new Vector3(10, 3, 25), Quaternion.identity);
-        Instantiate(sellFish, new Vector3(5, 3, 15), Quaternion.identity);
     }
 
     void GenerateCityTileMap()
@@ -100,6 +102,7 @@ public class CityMapGenerator : MonoBehaviour
         SpawnLampposts();
         SpawnPortal();
         SpawnMainCityBuilding();
+        SpawnShop();
         // Add more city objects as needed.
     }
 
@@ -197,6 +200,11 @@ public class CityMapGenerator : MonoBehaviour
     {
         GameObject wall = Instantiate(cityWallPrefab, position, rotation);
         wall.transform.localScale = new Vector3(1.0f, wallHeight, 10.0f);
+    }
+
+    void SpawnShop()
+    {
+        Instantiate(Shop, new Vector3(3.8f, 4.0f, 17.0f), Quaternion.identity);
     }
 }
     // Other functions and logic for spawning additional city objects can be added here.

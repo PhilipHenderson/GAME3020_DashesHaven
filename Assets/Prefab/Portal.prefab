@@ -70,8 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c51e48557a690aa40bec6fb61758f822, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  city: City
-  seabed: SeaBed
+  destinationSceneName: SeaBed
 --- !u!114 &494547262500359963
 MonoBehaviour:
   m_ObjectHideFlags: 0
