@@ -6,6 +6,9 @@ using UnityEngine.UIElements;
 
 public class CityMapGenerator : MonoBehaviour
 {
+    [Header("Player Settings")]
+    public GameObject player;
+
     [Header("Tile Settings")]
     public int widthAndHeight;
     public float scale = 2.0f;
@@ -38,17 +41,12 @@ public class CityMapGenerator : MonoBehaviour
     public GameObject portal;
     public Vector3 spawnPos;
 
-    [Header("Portal Settings")]
-    public GameObject player;
 
     [Header("City Wall Settings")]
     public Transform[] wallTransforms = new Transform[4];
     public GameObject cityWallPrefab;
     public float wallHeight = 5.0f;
     public float wallOffset = 5.0f;
-
-    [Header("AI Settings")]
-    public GameObject sellFish;
 
     [Header("Building Prefabs")]
     public GameObject Shop;

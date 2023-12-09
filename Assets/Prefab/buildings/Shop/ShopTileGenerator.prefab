@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &471411449323763537
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6685673141745911291}
+  - component: {fileID: 768206759737384385}
+  m_Layer: 0
+  m_Name: ShopTileGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6685673141745911291
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 471411449323763537}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.5981693, y: 2.2369945, z: 1.1072149}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &768206759737384385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 471411449323763537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40619ed5e7c670f4683a38488277fd78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilePrefab: {fileID: 5875240678046362786, guid: 01e1fae1efdd70e4fb5c12fa8f423a50, type: 3}
+  widthAndHeight: 10
+  tileSpacing: 1
+  playerFishController: {fileID: 7075905399459448895, guid: 5eee85629b7726845bb7ae8f473ecc26, type: 3}
+  portal: {fileID: 8531771145844497939, guid: 7f04cc68026b1e444a836723acf7070b, type: 3}
+  portalEntrencePos: {fileID: 8996291929163040438, guid: 0c0d1ee6616561348b46104d216bac65, type: 3}
+  portalPos: {fileID: 4875183643013955981, guid: 62ea4fb4494a57249b9aa83bccbafbc4, type: 3}
+  closestTile: {fileID: 0}

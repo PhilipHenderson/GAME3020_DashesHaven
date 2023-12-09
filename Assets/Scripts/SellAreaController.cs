@@ -3,14 +3,14 @@ using UnityEngine.UI;
 
 public class SellAreaController : MonoBehaviour
 {
-    public GameObject playerObject; // Reference to the player GameObject.
-    public GameObject popUpWindow; // Reference to your UI pop-up window.
-    public float interactionRange = 2.0f; // Adjust this range as needed.
+    public GameObject playerObject;
+    public GameObject popupWindow; 
+    public GameObject topScreenUIController;
 
-    public bool playerInRange; // Define playerInRange here.
+    public bool playerInRange;
+    public float interactionRange = 2.0f;
 
     public PlayerFishController playerFishController;
-    public GameObject topScreenUIController;
 
     public int currentWood;
     public int currentStone;
@@ -26,17 +26,27 @@ public class SellAreaController : MonoBehaviour
     {
         playerObject = GameObject.FindGameObjectWithTag("Player");
     }
+
     private void Start()
     {
         topScreenUIController = GameObject.FindGameObjectWithTag("TopScreenUI");
-        playerFishController = playerObject.GetComponent<PlayerFishController>();
-        if (popUpWindow != null)
+
+        GameObject foundPopupWindow = GameObject.FindGameObjectWithTag("PopupWindow");
+        if (foundPopupWindow != null)
         {
-            popUpWindow.SetActive(false);
+            popupWindow = foundPopupWindow;
+            Debug.Log("PopupWindow reference assigned successfully.");
+        }
+        else
+        {
+            Debug.LogError("PopupWindow GameObject not found.");
         }
     }
+
     private void Update()
     {
+        popupWindow = GameObject.FindGameObjectWithTag("PopupWindow");
+
         if (playerObject != null)
         {
             float distance = Vector3.Distance(playerObject.transform.position, transform.position);
@@ -46,32 +56,32 @@ public class SellAreaController : MonoBehaviour
                 // Player is in range
                 playerInRange = true;
                 //Debug.Log("Player In Range");
-                if (popUpWindow != null)
+                if (popupWindow != null)
                 {
-                    popUpWindow.SetActive(true);
+                    popupWindow.SetActive(true);
                 }
                 else
                 {
-                    Debug.LogWarning("Pop-up Window reference is null.");
+                    Debug.LogWarning("Pop-up Window reference is null1.");
                 }
             }
             else
             {
                 // Player is out of range
                 playerInRange = false;
-                if (popUpWindow != null)
+                if (popupWindow != null)
                 {
-                    popUpWindow.SetActive(false);
+                    popupWindow.SetActive(false);
                 }
                 else
                 {
-                    Debug.LogWarning("Pop-up Window reference is null.");
+                    Debug.LogWarning("Pop-up Window reference is null2.");
                 }
             }
         }
         else
         {
-            Debug.LogWarning("Player reference is null.");
+            Debug.LogWarning("Player reference is null3.");
         }
     }
     public void FixedUpdate()
@@ -85,9 +95,9 @@ public class SellAreaController : MonoBehaviour
     public bool IsPopUpWindowOpen()
     {
         // Return the state of the pop-up window (active or inactive)
-        if (popUpWindow != null)
+        if (popupWindow != null)
         {
-            return popUpWindow.activeSelf;
+            return popupWindow.activeSelf;
         }
         else { return false; }
     }

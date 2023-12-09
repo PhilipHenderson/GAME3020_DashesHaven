@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 using Unity.VisualScripting;
+using Microsoft.Win32.SafeHandles;
+using UnityEditor;
 
 public class PlayerFishController : MonoBehaviour
 {
@@ -15,7 +17,7 @@ public class PlayerFishController : MonoBehaviour
     public List<Pickup> pickups;
 
     [Header("Tile Movement Settings")]
-    private Coroutine currentMoveCoroutine; // Store the current movement coroutine.
+    public Coroutine currentMoveCoroutine; // Store the current movement coroutine.
     private Vector3 currentDestination;
     private Tile targetTile;
 
@@ -51,6 +53,7 @@ public class PlayerFishController : MonoBehaviour
     SellAreaController sellArea;
     CameraController cameraController;
     InfoBar infoBar;
+    public GameObject popupWindow;
 
     public TopScreenUIController topScreenUIController;
 
@@ -81,11 +84,9 @@ public class PlayerFishController : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-            Debug.Log("PlayerFishController instance created and marked as DontDestroyOnLoad.");
         }
         else
         {
-            Debug.Log("Destroying duplicate PlayerFishController instance.");
             Destroy(gameObject);
         }
     }
@@ -98,6 +99,11 @@ public class PlayerFishController : MonoBehaviour
         cameraController = FindObjectOfType<CameraController>();
         topScreenUIController = FindAnyObjectByType<TopScreenUIController>();
         infoBar = FindAnyObjectByType<InfoBar>();
+        popupWindow = GameObject.FindGameObjectWithTag("PopupWindow");
+        if (popupWindow != null)
+        {
+            popupWindow.SetActive(false);
+        }
         DontDestroyOnLoad(gameObject);
         topScreenUIController.UpdateHPUI(100);
         topScreenUIController.UpdateEnergyUI(100);
@@ -106,7 +112,7 @@ public class PlayerFishController : MonoBehaviour
         topScreenUIController.UpdateStoneUI(0);
         topScreenUIController.UpdateCoralUI(0);
         topScreenUIController.UpdateMoneyUI(0);
-        EnergyControl();
+        StartCoroutine(EnergyControl());
     }
 
     void Update()
@@ -131,14 +137,10 @@ public class PlayerFishController : MonoBehaviour
             bool isPopupWindowOpen = sellArea.IsPopUpWindowOpen();
             if (isPopupWindowOpen)
             {
-                //isMoving = true;
-                // Stop camera movement...
                 cameraController.cameraMoveSpeed = 0.0f;
             }
             else
             {
-                //isMoving = false;
-                // Allow camera movement...
                 cameraController.cameraMoveSpeed = 10.0f;
             }
         }
@@ -151,7 +153,6 @@ public class PlayerFishController : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                Debug.Log("clicked: " + hit.collider.name);
                 switch (hit.collider.tag)
                 {
                     case "Tile":
@@ -177,14 +178,13 @@ public class PlayerFishController : MonoBehaviour
                             {
                                 // Call the CollectPickup method to handle pickup collection
                                 CollectPickup(pickup);
+                                
                             }
                         }
                         break;
 
                     case "SellFishArea":
-                        Debug.Log("clicked SellFishArea");
                         MoveToSellArea(hit.collider.transform.position);
-                        Debug.Log("Touching: " + hit.collider.name);
                         break;
                 }
             }
@@ -196,7 +196,7 @@ public class PlayerFishController : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                Debug.Log("clicked: " + hit.collider.name);
+                //Debug.Log("clicked: " + hit.collider.name);
                 Vector3 distance = transform.position - hit.collider.transform.position;
                 float approximateDistance = distance.magnitude;
 
@@ -256,7 +256,7 @@ public class PlayerFishController : MonoBehaviour
         }
     }
 
-    IEnumerator MoveToTile(Vector3 targetPosition)
+    public IEnumerator MoveToTile(Vector3 targetPosition)
     {
         isMoving = true;
 
@@ -310,21 +310,40 @@ public class PlayerFishController : MonoBehaviour
         topScreenUIController.UpdateCoralUI(coral);
     }
 
-    void HealthControl()
-    {
-        
-    }
-
     IEnumerator EnergyControl()
     {
-        Energy--;
-        topScreenUIController.UpdateEnergyUI(energy);
-        yield return new WaitForSeconds(1.0f);
-    }
+        for (int i = 0; Energy >= i; Energy--)
+        {
+            topScreenUIController.UpdateEnergyUI(energy);
+            if (energy == 0)
+            {
+                for (int j = 1; Health >= j; Health -= 5)
+                {
+                    topScreenUIController.UpdateHPUI(hp);
+                    yield return new WaitForSeconds(1.0f);
+                }
+            }
+            else
+            {
+                if (food != 0)
+                {
+                    Energy = 100;
+                    if (food != 0)
+                    {
 
-    void FoodControl()
-    {
 
+                        for (int j = 1; Food >= j; Food -= 1)
+                        {
+                            topScreenUIController.UpdateFoodUI(food);
+                            yield return new WaitForSeconds(5.0f);
+                        }
+                    }
+                    else
+                        break;
+                }
+            }
+            yield return new WaitForSeconds(1.0f);
+        }
     }
 
     public void FreezePlayer()
@@ -338,6 +357,25 @@ public class PlayerFishController : MonoBehaviour
         StartCoroutine(MoveToTile(currentDestination));
         isMoving = true;
     }
+
+    public void TakeDamage(int damage)
+    {
+        hp -= damage;
+        if (hp <= 0)
+        {
+            // Player is dead, handle death logic here
+            // Display game over screen, reset player position, etc.
+            Debug.Log("GAME OVER, PLAYER DIED");
+
+            Destroy(gameObject);
+        }
+        else
+        {
+            // Player is still alive, update UI or perform other actions
+            topScreenUIController.UpdateHPUI(hp); // Update the health UI
+        }
+    }
+
 
 }
 

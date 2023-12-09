@@ -16,6 +16,7 @@ TagManager:
   - SellFish
   - SellFishArea
   - TopScreenUI
+  - PopupWindow
   layers:
   - Default
   - TransparentFX

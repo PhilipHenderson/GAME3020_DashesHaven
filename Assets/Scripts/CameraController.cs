@@ -11,7 +11,6 @@ public class CameraController : MonoBehaviour
     public Transform pivotPoint; // The point around which the camera will rotate
 
     private bool isCursorLocked = false;
-    private bool isCameraMoving = false;
 
     private float rotationInput = 0f;
     private Vector3 movementInput = Vector3.zero;

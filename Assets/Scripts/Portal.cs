@@ -13,7 +13,7 @@ public class Portal : MonoBehaviour
         }
     }
 
-    private void LoadDestinationScene()
+    public void LoadDestinationScene()
     {
         SceneManager.LoadScene(destinationSceneName);
     }

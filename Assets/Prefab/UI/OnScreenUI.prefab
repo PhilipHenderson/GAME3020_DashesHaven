@@ -348,7 +348,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: DayNightCycle, Assembly-CSharp
-        m_MethodName: FastForawrdButton
+        m_MethodName: FastForwardButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6289,6 +6289,10 @@ PrefabInstance:
     - target: {fileID: 4343491336088098028, guid: 1ed8875e79392cd479b9c513ad91e307, type: 3}
       propertyPath: m_Name
       value: PopUpWindow
+      objectReference: {fileID: 0}
+    - target: {fileID: 4343491336088098028, guid: 1ed8875e79392cd479b9c513ad91e307, type: 3}
+      propertyPath: m_TagString
+      value: PopupWindow
       objectReference: {fileID: 0}
     - target: {fileID: 6236765068018438337, guid: 1ed8875e79392cd479b9c513ad91e307, type: 3}
       propertyPath: m_AnchoredPosition.y

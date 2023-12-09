@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class MiniMap : MonoBehaviour
 {
-    public Transform player;
+    public GameObject player;
     public Transform cityMiniMapPosition;
     public Transform seabedMiniMapPosition;
 
@@ -64,6 +64,11 @@ public class MiniMap : MonoBehaviour
     {
         Scene currentScene = SceneManager.GetActiveScene();
 
+        if (player == null)
+        {
+            player = FindAnyObjectByType<GameObject>();
+        }
+
         if (currentScene.name == "SeaBed")
         {
             transform.position = seabedMiniMapPosition.position;
@@ -77,7 +82,7 @@ public class MiniMap : MonoBehaviour
             }
 
             // Update the minimap camera's position to keep the player centered
-            Vector3 playerPosition = player.position + offsetFromPlayer;
+            Vector3 playerPosition = player.transform.position + offsetFromPlayer;
             playerPosition.y = transform.position.y; // Maintain the minimap's height
             transform.position = playerPosition;
         }
