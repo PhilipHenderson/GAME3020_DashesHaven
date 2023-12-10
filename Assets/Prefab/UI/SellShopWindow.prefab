@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1154773003736032949}
   - component: {fileID: 3816019697184974889}
   - component: {fileID: 7937527741054783507}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: SellWoodTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 1304331511157383377}
   - component: {fileID: 8106883230462662839}
   - component: {fileID: 5646429151136854167}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: SellCoralButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -26.380354, y: -27.261581}
+  m_AnchoredPosition: {x: -26.380354, y: -27}
   m_SizeDelta: {x: 42.65, y: 29.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1304331511157383377
@@ -281,7 +281,7 @@ GameObject:
   - component: {fileID: 3958884689363976077}
   - component: {fileID: 9042374139485072494}
   - component: {fileID: 4515668921199528314}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: PurpleBoarder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -356,8 +356,8 @@ GameObject:
   - component: {fileID: 2790276388880958357}
   - component: {fileID: 2973993579727665135}
   - component: {fileID: 958945336077108708}
-  m_Layer: 6
-  m_Name: SellCoralTxt
+  m_Layer: 0
+  m_Name: BuyCoralTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -410,7 +410,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Sell Coral
+  m_text: Buy Coral
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -490,7 +490,7 @@ GameObject:
   - component: {fileID: 4764578132698118294}
   - component: {fileID: 6892386022445008692}
   - component: {fileID: 5900585591511372279}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: SellCoralTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -623,7 +623,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1057374643072371571}
   - component: {fileID: 7284722469191559742}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: SellWoodButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -649,7 +649,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -26.380371, y: 26.09}
+  m_AnchoredPosition: {x: -26.380371, y: 26}
   m_SizeDelta: {x: 40.07818, y: 25.38}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7284722469191559742
@@ -720,7 +720,7 @@ GameObject:
   - component: {fileID: 6705105151952944401}
   - component: {fileID: 1535602471492760428}
   - component: {fileID: 7079546399448683475}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: SellStoneButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -745,7 +745,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -26.380354, y: -1.2116035}
+  m_AnchoredPosition: {x: -26.380354, y: -1.2}
   m_SizeDelta: {x: 42.65, y: 29.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6705105151952944401
@@ -853,7 +853,7 @@ GameObject:
   - component: {fileID: 7326756478090070592}
   - component: {fileID: 744245452716832620}
   - component: {fileID: 4698939190639867360}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Boarder (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -928,7 +928,7 @@ GameObject:
   - component: {fileID: 1817270536302945107}
   - component: {fileID: 6199417665791493783}
   - component: {fileID: 4595642906317776911}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Boarder (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1004,7 +1004,7 @@ GameObject:
   - component: {fileID: 6308307695124498336}
   - component: {fileID: 4104033705805996270}
   - component: {fileID: 5127477844326274540}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: BuyStoneButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1029,7 +1029,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 25.806835, y: -1.2116035}
+  m_AnchoredPosition: {x: 25.806835, y: -1.2}
   m_SizeDelta: {x: 42.65, y: 29.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6308307695124498336
@@ -1137,7 +1137,7 @@ GameObject:
   - component: {fileID: 2196574995286710726}
   - component: {fileID: 8797564336928026138}
   - component: {fileID: 7488429453371085883}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Boarder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1213,7 +1213,7 @@ GameObject:
   - component: {fileID: 5628722183332014554}
   - component: {fileID: 8555313462322524173}
   - component: {fileID: 3497954182241044089}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: BuyWoodTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1347,7 +1347,7 @@ GameObject:
   - component: {fileID: 4143967325327543425}
   - component: {fileID: 7761820865744043578}
   - component: {fileID: 3704370920951733777}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: SellStoneTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1481,7 +1481,7 @@ GameObject:
   - component: {fileID: 4810053939868309337}
   - component: {fileID: 656258794838960258}
   - component: {fileID: 6694919004451675846}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: ShopKeepTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1558,9 +1558,9 @@ GameObject:
   - component: {fileID: 8967855997704986898}
   - component: {fileID: 8862324115760960119}
   - component: {fileID: 8731062834910633509}
-  m_Layer: 6
-  m_Name: PopUpWindow
-  m_TagString: Untagged
+  m_Layer: 0
+  m_Name: SellShopWindow
+  m_TagString: PopupWindow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1660,7 +1660,7 @@ GameObject:
   - component: {fileID: 5615006406120312589}
   - component: {fileID: 4802027188732631598}
   - component: {fileID: 2016766981712427767}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Button Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1735,7 +1735,7 @@ GameObject:
   - component: {fileID: 6689108575227067660}
   - component: {fileID: 318099472338085502}
   - component: {fileID: 2071177317616191373}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: ButtonBoarder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1810,7 +1810,7 @@ GameObject:
   - component: {fileID: 3101964335176034821}
   - component: {fileID: 4211432204081863857}
   - component: {fileID: 1087000332314445806}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Boarder (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1885,7 +1885,7 @@ GameObject:
   - component: {fileID: 688602775112809418}
   - component: {fileID: 7946222067923050127}
   - component: {fileID: 5394312835247012939}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: ShopKeepName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2019,7 +2019,7 @@ GameObject:
   - component: {fileID: 2078627889890323169}
   - component: {fileID: 8179761303702255376}
   - component: {fileID: 2054453303831324150}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: ButtonHolder Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2099,7 +2099,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2358161343513765703}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: ButtonHouse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2138,7 +2138,7 @@ GameObject:
   - component: {fileID: 5661043521057112439}
   - component: {fileID: 23553848035621149}
   - component: {fileID: 6275506054888085870}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: BuyCoralButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2163,7 +2163,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 25.806887, y: -27.261581}
+  m_AnchoredPosition: {x: 25.806887, y: -27}
   m_SizeDelta: {x: 42.65, y: 29.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5661043521057112439
@@ -2271,7 +2271,7 @@ GameObject:
   - component: {fileID: 4597183654477663691}
   - component: {fileID: 5046371216533679070}
   - component: {fileID: 3098452517893577575}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Boarder (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2347,7 +2347,7 @@ GameObject:
   - component: {fileID: 1947900062792944988}
   - component: {fileID: 3446480048892194619}
   - component: {fileID: 5064049397685628257}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: BuyWoodButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2372,7 +2372,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 25.806835, y: 25.87692}
+  m_AnchoredPosition: {x: 25.806835, y: 26}
   m_SizeDelta: {x: 42.65, y: 29.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1947900062792944988
@@ -2480,7 +2480,7 @@ GameObject:
   - component: {fileID: 6165540752471863560}
   - component: {fileID: 7113840957595943347}
   - component: {fileID: 6112064315857002111}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: SellStoneTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2616,7 +2616,7 @@ GameObject:
   - component: {fileID: 1144019858396493451}
   - component: {fileID: 4745954710217982760}
   - component: {fileID: 7147255095014541095}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Boarder (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

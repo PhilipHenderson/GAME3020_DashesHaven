@@ -183,6 +183,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 10
   aboveTileHeight: 3
+  isMoving: 0
   pickups: []
   citySpawnPosition: {x: 0, y: 0, z: 0}
   seabedSpawnPosition: {x: 0, y: 0, z: 0}
@@ -193,6 +194,7 @@ MonoBehaviour:
   stone: 0
   maxPickupRange: 5
   sellRange: 2
+  popupWindow: {fileID: 0}
   topScreenUIController: {fileID: 0}
 --- !u!1 &7550987417247863156
 GameObject:

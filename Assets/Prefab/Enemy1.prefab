@@ -130,11 +130,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   health: 100
-  speed: 3
-  wanderTimer: 5
+  speed: 10
   chaseRange: 10
   attackRange: 3
   attackPower: 10
   player: {fileID: 0}
-  containmentAreaCenter: {x: 20, y: 3, z: 20}
-  containmentRadius: 20
+  containmentAreaCenter: {x: 75, y: 3, z: 75}
+  containmentRadius: 70

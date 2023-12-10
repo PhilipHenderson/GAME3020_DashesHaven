@@ -77,6 +77,7 @@ public class PlayerFishController : MonoBehaviour
             return instance;
         }
     }
+    SellAreaController controller;
 
     private void Awake()
     {
@@ -89,6 +90,7 @@ public class PlayerFishController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        controller = FindObjectOfType<SellAreaController>();
     }
 
     private void Start()
@@ -100,10 +102,7 @@ public class PlayerFishController : MonoBehaviour
         topScreenUIController = FindAnyObjectByType<TopScreenUIController>();
         infoBar = FindAnyObjectByType<InfoBar>();
         popupWindow = GameObject.FindGameObjectWithTag("PopupWindow");
-        if (popupWindow != null)
-        {
-            popupWindow.SetActive(false);
-        }
+
         DontDestroyOnLoad(gameObject);
         topScreenUIController.UpdateHPUI(100);
         topScreenUIController.UpdateEnergyUI(100);
@@ -118,18 +117,41 @@ public class PlayerFishController : MonoBehaviour
     void Update()
     {
 
+        
+
         if (topScreenUIController == null)
         {
             topScreenUIController = FindAnyObjectByType<TopScreenUIController>();
         }
 
-
         if (Input.GetKey(KeyCode.C))
         {
+            money += 100;
+        }
+        if (Input.GetKey(KeyCode.T))
+        {
             wood++;
+        }
+        if (Input.GetKey(KeyCode.Y))
+        { 
             stone++;
         }
-
+        if (Input.GetKey(KeyCode.U))
+        { 
+            coral++;
+        }
+        if (Input.GetKey(KeyCode.G))
+        { 
+            controller.SellWood();
+        }
+        if (Input.GetKey(KeyCode.H))
+        { 
+            controller.SellStone();
+        }
+        if (Input.GetKey(KeyCode.J))
+        {
+            controller.SellCoral();
+        }
 
         #region
         if (sellArea != null)
@@ -158,6 +180,7 @@ public class PlayerFishController : MonoBehaviour
                     case "Tile":
                     case "CityTile":
                     case "Portal":
+                        Debug.Log("Clicked on Tile or CityTile or Portal");
                         Tile tile = hit.collider.GetComponent<Tile>();
                         if (tile != null)
                         {
@@ -170,6 +193,7 @@ public class PlayerFishController : MonoBehaviour
                         break;
 
                     case "Pickup":
+                        Debug.Log("Clicked on Pickup");
                         Pickup pickup = hit.collider.GetComponent<Pickup>();
                         if (pickup != null)
                         {
@@ -178,17 +202,18 @@ public class PlayerFishController : MonoBehaviour
                             {
                                 // Call the CollectPickup method to handle pickup collection
                                 CollectPickup(pickup);
-                                
                             }
                         }
                         break;
 
                     case "SellFishArea":
+                        Debug.Log("Clicked on SellFishArea");
                         MoveToSellArea(hit.collider.transform.position);
                         break;
                 }
             }
         }
+
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -196,39 +221,53 @@ public class PlayerFishController : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                //Debug.Log("clicked: " + hit.collider.name);
                 Vector3 distance = transform.position - hit.collider.transform.position;
                 float approximateDistance = distance.magnitude;
-
                 switch (hit.collider.name)
                 {
                     case "Wood(Clone)":
+                        Debug.Log("Clicked on Wood(Clone)");
                         infoBar.DisplayItemInfo(hit.collider.name, "Sturdy piece of HardWood!", 2, approximateDistance, "");
                         break;
+
                     case "Stone1(Clone)":
+                        Debug.Log("Clicked on Stone1(Clone)");
                         infoBar.DisplayItemInfo(hit.collider.name, "Thick Stone, Great For Building!", 2, approximateDistance, "");
                         break;
+
                     case "Coral1(Clone)":
+                        Debug.Log("Clicked on Coral1(Clone)");
                         infoBar.DisplayItemInfo(hit.collider.name, "Beautiful Coral, Great For Making Tools!", 2, approximateDistance, "");
                         break;
+
                     case "Food1(Clone)":
+                        Debug.Log("Clicked on Food1(Clone)");
                         infoBar.DisplayItemInfo(hit.collider.name, "Tasty Food, Keeps your energy Levels Up!", 2, approximateDistance, "");
                         break;
+
                     case "SellFish(Clone)":
+                        Debug.Log("Clicked on SellFish(Clone)");
                         infoBar.DisplayItemInfo(hit.collider.name, "Sell Goods Here!", 1000000, approximateDistance, "");
                         break;
+
                     case "Cylinder":
+                        Debug.Log("Clicked on Cylinder");
                         infoBar.DisplayItemInfo("Civizens Hut", "A Fishy Residence", 200, approximateDistance, "");
                         break;
+
                     case "CityTile(Clone)":
+                        Debug.Log("Clicked on CityTile(Clone)");
                         infoBar.DisplayBlank();
                         break;
+
                     case "BaseTile(Clone)":
+                        Debug.Log("Clicked on BaseTile(Clone)");
                         infoBar.DisplayBlank();
                         break;
                 }
             }
         }
+
         UpdateUI();
     }
 
@@ -375,7 +414,6 @@ public class PlayerFishController : MonoBehaviour
             topScreenUIController.UpdateHPUI(hp); // Update the health UI
         }
     }
-
 
 }
 

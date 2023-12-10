@@ -8,7 +8,7 @@ public class SellAreaController : MonoBehaviour
     public GameObject topScreenUIController;
 
     public bool playerInRange;
-    public float interactionRange = 2.0f;
+    public float interactionRange = 4.0f;
 
     public PlayerFishController playerFishController;
 
@@ -24,29 +24,19 @@ public class SellAreaController : MonoBehaviour
 
     private void Awake()
     {
+        playerFishController = FindObjectOfType<PlayerFishController>();
         playerObject = GameObject.FindGameObjectWithTag("Player");
+        popupWindow = GameObject.FindGameObjectWithTag("PopupWindow");
     }
 
     private void Start()
     {
         topScreenUIController = GameObject.FindGameObjectWithTag("TopScreenUI");
-
-        GameObject foundPopupWindow = GameObject.FindGameObjectWithTag("PopupWindow");
-        if (foundPopupWindow != null)
-        {
-            popupWindow = foundPopupWindow;
-            Debug.Log("PopupWindow reference assigned successfully.");
-        }
-        else
-        {
-            Debug.LogError("PopupWindow GameObject not found.");
-        }
+        popupWindow.SetActive(false);
     }
 
     private void Update()
     {
-        popupWindow = GameObject.FindGameObjectWithTag("PopupWindow");
-
         if (playerObject != null)
         {
             float distance = Vector3.Distance(playerObject.transform.position, transform.position);

@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ShopTileGenerator : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class ShopTileGenerator : MonoBehaviour
 
     [Header("GameObject Settings")]
     public GameObject sellFish;
-    public GameObject shopDesk;
+    public GameObject popupWindow;
     public Portal portal;
 
     [Header("Placement Settings")]
@@ -26,11 +27,11 @@ public class ShopTileGenerator : MonoBehaviour
     public GameObject wallPrefab; // Prefab representing a wall
     public float wallHeight = 5.0f; // Height of the wall
 
-
     private void Awake()
     {
         mainCam = GameObject.FindGameObjectWithTag("MainCamera");
         playerFishController = GameObject.FindGameObjectWithTag("Player");
+        popupWindow = GameObject.FindGameObjectWithTag("PopupWindow");
         portal = Instantiate(portal, portalPos.position, Quaternion.identity);
     }
 

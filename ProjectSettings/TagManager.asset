@@ -17,6 +17,18 @@ TagManager:
   - SellFishArea
   - TopScreenUI
   - PopupWindow
+  - ChaseRange
+  - AttackRange
+  - CityPosition
+  - SeabedPosition
+  - DirectionalLight
+  - TimeController
+  - BuyPad1
+  - BuyPad3
+  - BuyPad2
+  - Popup1
+  - Popup2
+  - Popup3
   layers:
   - Default
   - TransparentFX

@@ -43,6 +43,11 @@ public class TileMapGenerator : MonoBehaviour
     [Header("Spawn Settings")]
     public Transform playerSpawnPoint; // Assign the spawn point from the Inspector.
 
+    [Header("Enemy Settings")]
+    public GameObject enemyAIPrefab;
+    public int enemyCount = 10;
+    public float enemySpawnRadius = 15.0f;
+
 
     void Start()
     {
@@ -55,6 +60,7 @@ public class TileMapGenerator : MonoBehaviour
         GenerateTileMap();
         SpawnObjects();
         SpawnPortal();
+        SpawnEnemies();
 
         portal.GetComponent<Portal>().destinationSceneName = "City";
 
@@ -81,6 +87,8 @@ public class TileMapGenerator : MonoBehaviour
 
     void Update()
     {
+        if (portal.GetComponent<Portal>().destinationSceneName != "City")
+             portal.GetComponent<Portal>().destinationSceneName = "City";
         // Check if the "R" key is pressed.
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -357,6 +365,24 @@ public class TileMapGenerator : MonoBehaviour
     void SpawnPortal()
     {
         Instantiate(portal, new Vector3(30.0f,1.5f,15.0f), Quaternion.identity);
+    }
+
+    void SpawnEnemies()
+    {
+        GameObject enemyParent = new GameObject("Enemies");
+
+        for (int i = 0; i < enemyCount; i++)
+        {
+            // Generate a random position within the specified radius.
+            Vector2 randomPosition = Random.insideUnitCircle * enemySpawnRadius;
+
+            // Ensure the position is within the bounds of your tile map.
+            Vector3 enemyPosition = new Vector3(randomPosition.x, FindHighestTileYPosition(), randomPosition.y);
+
+            // Spawn the enemy at the calculated position.
+            GameObject enemy = Instantiate(enemyAIPrefab, new Vector3(80.0f,3.0f,80.0f), Quaternion.identity);
+            enemy.transform.parent = enemyParent.transform;
+        }
     }
 
 }

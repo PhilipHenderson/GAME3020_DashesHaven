@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TownHall.unity
     guid: 3585a01631dd91648af302ae1b52d3ce
+  - enabled: 1
+    path: Assets/Scenes/House1.unity
+    guid: eba18cd59fc44b74d9c892720caf511a
   m_configObjects: {}

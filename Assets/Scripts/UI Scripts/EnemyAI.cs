@@ -15,7 +15,6 @@ public class EnemyAI : MonoBehaviour
     public EnemyState currentState;
     public float health = 100f;
     public float speed = 5f;
-    public float wanderTimer = 5f;
     public float chaseRange = 10f;
     public float attackRange = 3f;
     public int attackPower = 10;
@@ -24,6 +23,7 @@ public class EnemyAI : MonoBehaviour
     public float containmentRadius = 20f;
 
     private Vector3 wanderTarget;
+    private float wanderTimer;
     private bool isAttacking = false;
 
     void Start()
@@ -100,7 +100,7 @@ public class EnemyAI : MonoBehaviour
         while (currentState == EnemyState.Attack && player != null)
         {
             player.GetComponent<PlayerFishController>().TakeDamage(damage);
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(Random.Range(3.0f, 5.0f));
         }
 
         isAttacking = false;
@@ -109,17 +109,35 @@ public class EnemyAI : MonoBehaviour
 
     void MoveTowards(Vector3 target)
     {
+        // Calculate direction to the target.
         Vector3 direction = (target - transform.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+
+        // Check if the next movement will keep the fish within the containment area.
+        Vector3 nextPosition = transform.position + direction * speed * Time.deltaTime;
+        Vector3 directionToCenter = containmentAreaCenter - nextPosition;
+
+        if (directionToCenter.magnitude > containmentRadius)
+        {
+            // If the fish is going out of bounds, steer it back towards the containment center.
+            Vector3 newDirection = (containmentAreaCenter - transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(newDirection.x, 0, newDirection.z));
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+            transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        }
+        else
+        {
+            // If the fish is within bounds, continue towards the target.
+            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+            transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        }
     }
 
     void SetNewRandomDestination()
     {
         wanderTarget = GetRandomPointInContainmentArea();
         currentState = EnemyState.Wander;
-        Invoke("SetNewRandomDestination", wanderTimer);
+        Invoke("SetNewRandomDestination", Random.Range(3.0f, 5.0f));
     }
 
     Vector3 GetRandomPointInContainmentArea()
