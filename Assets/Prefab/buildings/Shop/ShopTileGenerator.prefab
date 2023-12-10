@@ -50,7 +50,7 @@ MonoBehaviour:
   tilePrefab: {fileID: 5875240678046362786, guid: 01e1fae1efdd70e4fb5c12fa8f423a50, type: 3}
   widthAndHeight: 20
   tileSpacing: 1
-  sellFish: {fileID: 4769773997528533404, guid: 8b823ce5c65bc2c4e99b03dc5d4359fd, type: 3}
+  sellFish: {fileID: 6043761898863578898, guid: 8b823ce5c65bc2c4e99b03dc5d4359fd, type: 3}
   popupWindow: {fileID: 4343491336088098028, guid: 1ed8875e79392cd479b9c513ad91e307, type: 3}
   portal: {fileID: 8531771145844497939, guid: 7f04cc68026b1e444a836723acf7070b, type: 3}
   portalEntrencePos: {fileID: 8996291929163040438, guid: 0c0d1ee6616561348b46104d216bac65, type: 3}
@@ -84,7 +84,7 @@ Transform:
   m_GameObject: {fileID: 3142399380586535985}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 5.79}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -106,13 +106,13 @@ MonoBehaviour:
   popupWindow: {fileID: 0}
   topScreenUIController: {fileID: 0}
   playerInRange: 0
-  interactionRange: 2
+  interactionRange: 4
   playerFishController: {fileID: 0}
   currentWood: 0
   currentStone: 0
   currentCoral: 0
   currentMoney: 0
-  woodCost: 0
-  stoneCost: 0
-  coralCost: 0
-  foodCost: 0
+  woodCost: 15
+  stoneCost: 20
+  coralCost: 50
+  foodCost: 10

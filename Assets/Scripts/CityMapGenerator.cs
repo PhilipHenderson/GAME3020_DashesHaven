@@ -8,6 +8,8 @@ public class CityMapGenerator : MonoBehaviour
 {
     [Header("Player Settings")]
     public GameObject player;
+    public GameObject playerPrefab;
+    public GameObject playerCitySpawnPosition;
 
     [Header("Tile Settings")]
     public int widthAndHeight;
@@ -37,9 +39,11 @@ public class CityMapGenerator : MonoBehaviour
     public float lamppostOffsetY;
     public float buildingOffsetY;
 
-    [Header("Portal Settings")]
+    [Header("Portal And Bank Settings")]
     public GameObject portal;
-    public Vector3 spawnPos;
+    public GameObject bank;
+    public Vector3 portalSpawnPos;
+    public Vector3 bankSpawnPos;
 
 
     [Header("City Wall Settings")]
@@ -81,20 +85,37 @@ public class CityMapGenerator : MonoBehaviour
         popup1 = GameObject.FindGameObjectWithTag("Popup1");
         popup2 = GameObject.FindGameObjectWithTag("Popup2");
         popup3 = GameObject.FindGameObjectWithTag("Popup3");
+
+        if (player == null)
+        {
+            player = Instantiate(playerPrefab);
+        }
+        else
+        {
+            Debug.Log("Player Already In Scene");
+        }
     }
 
     void Start()
     {
+        playerCitySpawnPosition = GameObject.FindGameObjectWithTag("CitySpawnPosition");
+        player = GameObject.FindGameObjectWithTag("Player");
+        PositionPlayer(playerCitySpawnPosition.transform.position);
         width = widthAndHeight;
         height = widthAndHeight;
-        GenerateCityTileMap();
         SpawnCityObjects();
+        SpawnPortalAndBank();
+        GenerateCityTileMap();
         SpawnCityWalls();
         SpawnPopupWindows();
         spawnPlotsAndHouses();
-        spawnPos.x = portal.transform.position.x + 10.0f;
+    }
+
+    private void SpawnPortalAndBank()
+    {
+        portalSpawnPos.x = portal.transform.position.x + 10.0f;
         portal.GetComponent<Portal>().destinationSceneName = "SeaBed";
-        Instantiate(player, new Vector3(10, 3, 25), Quaternion.identity);
+        bank = Instantiate(bank, bankSpawnPos, Quaternion.identity);
     }
 
     private void Update()
@@ -321,6 +342,10 @@ public class CityMapGenerator : MonoBehaviour
         popup3.SetActive(false);
     }
 
+    public void PositionPlayer(Vector3 position)
+    {
+        player.transform.position = position;
+    }
 }
 // Other functions and logic for spawning additional city objects can be added here.
 

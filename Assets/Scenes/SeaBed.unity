@@ -334,7 +334,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8389591268680841169, guid: 8f678fcfed651ea4ea1bbb28e8ffc468, type: 3}
       propertyPath: enemyCount
-      value: 100
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8389591268680841169, guid: 8f678fcfed651ea4ea1bbb28e8ffc468, type: 3}
       propertyPath: rockPrefab

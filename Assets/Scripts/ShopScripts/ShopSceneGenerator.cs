@@ -2,7 +2,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class ShopTileGenerator : MonoBehaviour
+public class ShopSceneGenerator : MonoBehaviour
 {
     [Header("Player Settings")]
     public GameObject playerFishController;
@@ -40,7 +40,7 @@ public class ShopTileGenerator : MonoBehaviour
         GenerateShopTiles();
         GenerateWalls();
         playerFishController.transform.position = portalEntrencePos.transform.position;
-        mainCam.transform.position = portalEntrencePos.transform.position + new Vector3(0.0f, 8.0f, 0.0f);
+        mainCam.transform.position = portalEntrencePos.transform.position + new Vector3(0.0f, 8.0f, -10.0f);
         playerFishController.GetComponent<PlayerFishController>().StopAllCoroutines();
         playerFishController.GetComponent<PlayerFishController>().StartCoroutine(playerFishController.GetComponent<PlayerFishController>().MoveToTile(new Vector3(2.0f, 2.0f, 2.0f)));
         portal.destinationSceneName = "City";

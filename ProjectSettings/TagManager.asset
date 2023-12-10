@@ -29,6 +29,8 @@ TagManager:
   - Popup1
   - Popup2
   - Popup3
+  - BankPopupWindow
+  - CitySpawnPosition
   layers:
   - Default
   - TransparentFX
