@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 43452428600736861}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.08, y: 0, z: -5.51}
+  m_LocalPosition: {x: 0.08, y: -1.29, z: -5.51}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -49,9 +49,6 @@ MonoBehaviour:
   housePopupWindow1: {fileID: 4343491336088098028, guid: dc96970f9aef2a44c91ce91e12b27367, type: 3}
   housePopupWindow2: {fileID: 250485777986397630, guid: f5aa63478618a764cb981f6c4b9a386d, type: 3}
   housePopupWindow3: {fileID: 5517591917259340574, guid: 5d24bd3996d98d84582af7498b647292, type: 3}
-  housePopupPrefab1: {fileID: 4343491336088098028, guid: dc96970f9aef2a44c91ce91e12b27367, type: 3}
-  housePopupPrefab2: {fileID: 250485777986397630, guid: f5aa63478618a764cb981f6c4b9a386d, type: 3}
-  housePopupPrefab3: {fileID: 5517591917259340574, guid: 5d24bd3996d98d84582af7498b647292, type: 3}
 --- !u!136 &3368016789937849451
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -372,7 +369,7 @@ Transform:
   m_GameObject: {fileID: 4044749672201347766}
   serializedVersion: 2
   m_LocalRotation: {x: -0.49942324, y: -0.50057614, z: -0.50057614, w: 0.49942324}
-  m_LocalPosition: {x: 0, y: 0, z: 4.04}
+  m_LocalPosition: {x: 0, y: -1.29, z: 4.04}
   m_LocalScale: {x: 12.97, y: 366.66882, z: 12.97}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -582,7 +579,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: -90.132, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.03, y: 0}
+  m_AnchoredPosition: {x: 0.03, y: -1.29}
   m_SizeDelta: {x: 3040, y: 1440}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &871310539095636688

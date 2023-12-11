@@ -17,4 +17,9 @@ public class MenuController : MonoBehaviour
         // Load the main scene when the "New Game" button is pressed.
         SceneManager.LoadScene("City");
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }

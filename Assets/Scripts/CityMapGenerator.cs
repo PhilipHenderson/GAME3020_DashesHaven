@@ -62,23 +62,38 @@ public class CityMapGenerator : MonoBehaviour
     public GameObject popup2;
     public GameObject popup3;
 
-    [Header("House1 Settings")]
+    [Header("Home Settings")]
     public GameObject plot1;
-    public GameObject house1;
-    public Vector3 house1Pos;
-    public bool house1Purchased = false;
-
-    [Header("House2 Settings")]
     public GameObject plot2;
-    public GameObject house2;
-    public Vector3 house2Pos;
-    public bool house2Purchased = false;
-
-    [Header("House3 Settings")]
-    public GameObject house3;
     public GameObject plot3;
+    public GameObject house1;
+    public GameObject house2;
+    public GameObject house3;
+    public Vector3 house1Pos;
+    public Vector3 house2Pos;
     public Vector3 house3Pos;
+    public bool house1Purchased = false;
+    public bool house2Purchased = false;
     public bool house3Purchased = false;
+
+    [Header("Production Building Settings")]
+    public GameObject woodProductionBuildingPrefab;
+    public GameObject stoneProductionBuildingPrefab;
+    public GameObject coralProductionBuildingPrefab;
+    public GameObject foodProductionBuildingPrefab;
+    public Vector3 woodProductionPos;
+    public Vector3 stoneProductionPos;
+    public Vector3 coralProductionPos;
+    public Vector3 foodProductionPos;
+    public bool woodProductionPurchased = false;
+    public bool stoneProductionPurchased = false;
+    public bool coralProductionPurchased = false;
+    public bool foodProductionPurchased = false;
+    private GameObject woodProductionBuilding;
+    private GameObject stoneProductionBuilding;
+    private GameObject coralProductionBuilding;
+    private GameObject foodProductionBuilding;
+
 
     private void Awake()
     {
@@ -109,6 +124,15 @@ public class CityMapGenerator : MonoBehaviour
         SpawnCityWalls();
         SpawnPopupWindows();
         spawnPlotsAndHouses();
+        CreatingProductionBuildings();
+    }
+
+    private void CreatingProductionBuildings()
+    {
+        woodProductionBuilding = Instantiate(woodProductionBuildingPrefab, woodProductionPos, Quaternion.identity);
+        stoneProductionBuilding = Instantiate(stoneProductionBuildingPrefab, stoneProductionPos, Quaternion.identity);
+        coralProductionBuilding = Instantiate(coralProductionBuildingPrefab, coralProductionPos, Quaternion.identity);
+        foodProductionBuilding = Instantiate(foodProductionBuildingPrefab, foodProductionPos, Quaternion.identity);
     }
 
     private void SpawnPortalAndBank()
@@ -311,7 +335,7 @@ public class CityMapGenerator : MonoBehaviour
     void SpawnHouse1()
     {
         if (house1 != null)
-            Instantiate(house1, house1Pos, Quaternion.identity);
+            Instantiate(house1, house1Pos + new Vector3(0,1.30f,0), Quaternion.identity);
     }
     void SpawnPlot2()
     {
@@ -321,7 +345,7 @@ public class CityMapGenerator : MonoBehaviour
     void SpawnHouse2()
     {
         if (house2 != null)
-            Instantiate(house2, house2Pos, Quaternion.identity);
+            Instantiate(house2, house2Pos + new Vector3(0, 1.30f, 0), Quaternion.identity);
     }
     void SpawnPlot3()
     {
