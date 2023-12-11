@@ -49,7 +49,7 @@ public class BuyHouseScript : MonoBehaviour
     void OpenBuyHousePopup(GameObject housePopupWindow)
     {
         housePopupWindow.SetActive(true);
-        // Add any other logic when opening the popup window
+        
     }
 
     void CloseAllBuyHousePopups()
@@ -57,7 +57,6 @@ public class BuyHouseScript : MonoBehaviour
         mapGenerator.popup1.SetActive(false);
         mapGenerator.popup2.SetActive(false);
         mapGenerator.popup3.SetActive(false);
-        // Add any other logic when closing the popup window
     }
 
     public void BuyHouse1()

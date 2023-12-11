@@ -26,9 +26,9 @@ public class CityMapGenerator : MonoBehaviour
     public GameObject lamppostPrefab;
 
     [Header("Building Spawn Settings")]
-    public int buildingCount = 50; // Number of buildings in the city.
+    public int buildingCount = 50;
     public float buildingSpawnRadius = 10.0f;
-    public float buildingRadius = 2.0f; // Adjust this value based on the size of your buildings.
+    public float buildingRadius = 2.0f; 
     public int edgeBuffer = 10;
 
     [Header("Other City Objects Spawn Settings")]
@@ -191,7 +191,6 @@ public class CityMapGenerator : MonoBehaviour
     {
         Vector3 centerPosition = new Vector3(width / 2, -1.0f, height / 2);
         GameObject mainCityBuilding = Instantiate(mainCityBuildingPrefab, centerPosition, Quaternion.identity);
-        // Adjust the Y-position to ensure the main city building is above the city tiles.
         mainCityBuilding.transform.position = new Vector3(centerPosition.x, centerPosition.y + buildingOffsetY, centerPosition.z);
     }
 
@@ -215,7 +214,6 @@ public class CityMapGenerator : MonoBehaviour
             Vector3 position = new Vector3(randomBuildingPosition.x + offset.x, -1.0f, randomBuildingPosition.y + offset.y);
 
             GameObject building = Instantiate(buildingPrefab, position, Quaternion.identity);
-            // Adjust the Y-position to ensure buildings are above the city tiles.
             building.transform.position = new Vector3(position.x, position.y + buildingOffsetY, position.z);
             building.transform.parent = buildingParent.transform;
         }
@@ -225,26 +223,23 @@ public class CityMapGenerator : MonoBehaviour
     {
         GameObject lamppostParent = new GameObject("Lampposts");
 
-        // Define the number of rows in from the perimeter to place lampposts.
-        int rowsIn = 10; // Adjust this value as needed.
+        int rowsIn = 10; 
 
-        // Define the spacing between lampposts (about 20 tiles).
-        int spacing = 20; // Adjust this value as needed.
+        int spacing = 20; 
 
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
-                // Check if the current tile is in the outer rows and meets the spacing condition.
+
                 if ((x < rowsIn || x >= width - rowsIn || y < rowsIn || y >= height - rowsIn) &&
                     (x % spacing == 0 && y % spacing == 0))
                 {
-                    // Calculate the position of the current tile.
-                    float positionX = x; // Adjust this if your tiles have different sizes.
+
+                    float positionX = x; 
                     float positionY = 0.0f;
                     float positionZ = y;
 
-                    // Create a lamppost at the calculated position.
                     Vector3 position = new Vector3(positionX, positionY + lamppostOffsetY, positionZ);
                     GameObject lamppost = Instantiate(lamppostPrefab, position, Quaternion.identity);
                     lamppost.transform.parent = lamppostParent.transform;
@@ -255,7 +250,6 @@ public class CityMapGenerator : MonoBehaviour
 
     bool IsCenterValid(Vector2 center, int buffer)
     {
-        // Check if the center is at least 'buffer' units away from the map edges.
         return center.x >= buffer && center.x <= (width - buffer) && center.y >= buffer && center.y <= (height - buffer);
     }
 
@@ -290,15 +284,6 @@ public class CityMapGenerator : MonoBehaviour
 
     public void spawnPlotsAndHouses()
     {
-        /*
-         *  Tasks:
-         *  
-         *  create a popup window for House Buying
-         * 
-         *  create function that buys the house
-         *  
-         *  
-         */
         if (plot1 != null)
         {
             SpawnPlot1();
@@ -371,5 +356,4 @@ public class CityMapGenerator : MonoBehaviour
         player.transform.position = position;
     }
 }
-// Other functions and logic for spawning additional city objects can be added here.
 

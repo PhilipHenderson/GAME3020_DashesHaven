@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class ButtonScript2 : MonoBehaviour
 {
-    public InputField amountInputField; // Reference to the input field for amount
+    public InputField amountInputField; 
 
     public Button withAll;
     public Button DepoAll;
@@ -16,11 +16,10 @@ public class ButtonScript2 : MonoBehaviour
 
     private void Start()
     {
-        // Find the necessary controllers or scripts
+
         playerFishController = FindObjectOfType<PlayerFishController>();
         bankChestScript = FindObjectOfType<BankChestScript>();
 
-        // Add listeners to buttons
         withAll.onClick.AddListener(WithdrawAll);
         DepoAll.onClick.AddListener(DepositAll);
         With.onClick.AddListener(Withdraw);

@@ -3,9 +3,9 @@ using UnityEngine.UI;
 
 public class ButtonScript : MonoBehaviour
 {
-    public Button button1; // Reference to your UI button
-    public Button button2; // Reference to another UI button
-    public Button button3; // Reference to another UI button
+    public Button button1;
+    public Button button2;
+    public Button button3;
 
     BuyHouseScript buyHouseScript;
     PlayerFishController playerFishController;
@@ -14,7 +14,6 @@ public class ButtonScript : MonoBehaviour
     {
         playerFishController = FindObjectOfType<PlayerFishController>();
 
-        // Add listeners to buttons
         button1.onClick.AddListener(BuyHouse1);
         button2.onClick.AddListener(BuyHouse2);
         button3.onClick.AddListener(BuyHouse3);
@@ -29,7 +28,6 @@ public class ButtonScript : MonoBehaviour
     {
         if (playerFishController.Money >= 1000)
         {
-            // Your logic for BuyHouse1
             buyHouseScript.BuyHouse1();
             playerFishController.Money -= 1000;
             Debug.Log("BuyHouse1 Pressed");
@@ -42,7 +40,6 @@ public class ButtonScript : MonoBehaviour
     {
         if (playerFishController.Money >= 5000)
         {
-            // Your logic for BuyHouse2
             buyHouseScript.BuyHouse2();
             playerFishController.Money -= 5000;
             Debug.Log("BuyHouse2 Pressed");
@@ -55,7 +52,6 @@ public class ButtonScript : MonoBehaviour
     {
         if (playerFishController.Money >= 15000)
         {
-            // Your logic for BuyHouse3
             buyHouseScript.BuyHouse3();
             playerFishController.Money -= 15000;
             Debug.Log("BuyHouse3 Pressed");

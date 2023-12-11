@@ -17,19 +17,15 @@ public class Pickup : MonoBehaviour
 
     public PickupType pickupType;
 
-    // Reference to the tile this pickup is on
     private Tile tile;
 
     private void Start()
     {
-        // Initialize the playerCollider reference.
         playerCollider = GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>();
 
-        // Find and store the tile this pickup is on
         tile = GetComponentInParent<Tile>();
     }
 
-    // Get the associated tile
     public Tile GetTile()
     {
         return tile;

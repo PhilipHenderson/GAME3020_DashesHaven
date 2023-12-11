@@ -17,12 +17,12 @@ public class PlayerFishController : MonoBehaviour
     public List<Pickup> pickups;
 
     [Header("Tile Movement Settings")]
-    public Coroutine currentMoveCoroutine; // Store the current movement coroutine.
+    public Coroutine currentMoveCoroutine;
     private Vector3 currentDestination;
     private Tile targetTile;
 
     [Header("Spawn Position Settings")]
-    public Vector3 citySpawnPosition; // Public variable for city spawn position.
+    public Vector3 citySpawnPosition; 
     public Vector3 seabedSpawnPosition;
 
     [Header("Player Settings")]
@@ -47,7 +47,7 @@ public class PlayerFishController : MonoBehaviour
     private int coral = 0;
     public int Coral { get { return coral; } set { coral = value; } }
 
-    public float maxPickupRange = 3.0f; // Adjust the range as needed.
+    public float maxPickupRange = 3.0f;
     public float sellRange = 2.0f;
 
     SellAreaController sellArea;
@@ -64,10 +64,8 @@ public class PlayerFishController : MonoBehaviour
         {
             if (instance == null)
             {
-                // Try to find an existing instance in the scene
                 instance = FindObjectOfType<PlayerFishController>();
 
-                // If no instance was found, create a new one
                 if (instance == null)
                 {
                     GameObject playerFishControllerObject = new GameObject("PlayerFishController");
@@ -95,7 +93,6 @@ public class PlayerFishController : MonoBehaviour
 
     private void Start()
     {
-        // Find all Pickup components in the scene and put them in the list
         pickups = new List<Pickup>(FindObjectsOfType<Pickup>());
         sellArea = FindAnyObjectByType<SellAreaController>();
         cameraController = FindObjectOfType<CameraController>();
@@ -200,7 +197,6 @@ public class PlayerFishController : MonoBehaviour
                             float distanceToPickup = Vector3.Distance(transform.position, pickup.transform.position);
                             if (distanceToPickup <= maxPickupRange)
                             {
-                                // Call the CollectPickup method to handle pickup collection
                                 CollectPickup(pickup);
                             }
                         }
@@ -342,7 +338,6 @@ public class PlayerFishController : MonoBehaviour
             Destroy(pickup.gameObject);
         }
 
-        // Update the UI based on the collected pickup type and amount
         topScreenUIController.UpdateFoodUI(food);
         topScreenUIController.UpdateStoneUI(stone);
         topScreenUIController.UpdateWoodUI(wood);
@@ -402,16 +397,13 @@ public class PlayerFishController : MonoBehaviour
         hp -= damage;
         if (hp <= 0)
         {
-            // Player is dead, handle death logic here
-            // Display game over screen, reset player position, etc.
             Debug.Log("GAME OVER, PLAYER DIED");
 
             Destroy(gameObject);
         }
         else
         {
-            // Player is still alive, update UI or perform other actions
-            topScreenUIController.UpdateHPUI(hp); // Update the health UI
+            topScreenUIController.UpdateHPUI(hp);
         }
     }
 

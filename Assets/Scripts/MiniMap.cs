@@ -20,10 +20,8 @@ public class MiniMap : MonoBehaviour
         {
             if (instance == null)
             {
-                // Try to find an existing instance in the scene
                 instance = FindObjectOfType<MiniMap>();
 
-                // If no instance was found, create a new one
                 if (instance == null)
                 {
                     GameObject MiniMapObject = new GameObject("MiniMap");
@@ -54,9 +52,8 @@ public class MiniMap : MonoBehaviour
         Scene currentScene = SceneManager.GetActiveScene();
         if (currentScene.name == "City")
         {
-            // Set the minimap position to the city's position
             transform.position = cityMiniMapPosition.position;
-            transform.parent = null; // Remove the parent relationship
+            transform.parent = null; 
         }
     }
 
@@ -73,26 +70,21 @@ public class MiniMap : MonoBehaviour
         {
             transform.position = seabedMiniMapPosition.position;
 
-            // Detach the minimap from the player's rotation
             if (!rotateWithPlayer)
             {
-                // Set the minimap's rotation to its initial rotation
                 Quaternion fixedRotation = Quaternion.identity;
                 transform.rotation = fixedRotation;
             }
 
-            // Update the minimap camera's position to keep the player centered
             Vector3 playerPosition = player.transform.position + offsetFromPlayer;
-            playerPosition.y = transform.position.y; // Maintain the minimap's height
+            playerPosition.y = transform.position.y;
             transform.position = playerPosition;
         }
 
         else if (currentScene.name == "City")
         {
-            // If in the city scene, detach the minimap from the player
             transform.parent = null;
 
-            // Smoothly interpolate the position towards the city's position
             transform.position = Vector3.Lerp(transform.position, cityMiniMapPosition.position, smoothSpeed * Time.deltaTime);
         }
     }
